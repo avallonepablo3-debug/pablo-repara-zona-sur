@@ -4,8 +4,7 @@ import hero from "@/assets/hero.jpg";
 import baLav from "@/assets/ba-lavarropas.jpg";
 import baHel from "@/assets/ba-heladera.jpg";
 
-// TODO: reemplazar con el número real de Pablo Service (formato internacional sin +)
-const WA_NUMBER = "5491100000000";
+const WA_NUMBER = "5491122435375";
 const WA_MSG =
   "Hola Pablo Service, vi tu página y necesito una reparación. ¿Podrías coordinar una visita sin cargo?";
 export const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG)}`;
