@@ -123,6 +123,11 @@
   .trust-item { padding-inline: 12px; }
   .trust-item strong { font-size: 25px; }
 }
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .catalog-top { gap: 10px; padding-inline: 16px; }
+  .catalog-top h3 { font-size: 24px; }
+  .catalog-top > svg { width: 32px; height: 32px; }
+}
 @media (max-width: 767px) {
   .page-width { padding-inline: 20px; }
   .section-space { padding-block: 48px; }
@@ -130,7 +135,8 @@
   .brand-name { font-size: 23px; }
   .brand-icon { width: 43px; height: 48px; }
   .hero-content { padding-block: 34px 42px; }
-  .hero-title { font-size: 54px; margin-top: 22px; }
+  .hero-title { font-size: 40px; margin-top: 22px; }
+  .hero-content > p.font-display { font-size: 26px; }
   .hero-copy { font-size: 17px; }
   .hero-photo-panel { display: none; }
   .wa-button.hero-cta { width: 100%; min-height: 76px; font-size: 21px; padding-inline: 16px; }
@@ -143,7 +149,7 @@
   .zone-list li { font-size: 14px; padding-inline: 0; }
   .profile-photo { height: 320px; }
 }
-@media (max-width: 380px) { .hero-title { font-size: 47px; } .brand-name { font-size: 20px; } .mobile-contact .wa-button { font-size: 17px; } }
+@media (max-width: 380px) { .hero-title { font-size: 35px; } .brand-name { font-size: 20px; } .mobile-contact .wa-button { font-size: 17px; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
