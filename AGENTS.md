@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep all WhatsApp entrypoints on the shared WA_URL and render contact links through the Button whatsapp variant, so the contact destination and interaction styling remain consistent.
+- Define the industrial page's palette, section treatments and shadows in src/styles.css; use semantic tokens in page code so visual changes remain centralized.
