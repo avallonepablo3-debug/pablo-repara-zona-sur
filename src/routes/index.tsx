@@ -163,24 +163,59 @@ function Index() {
       </section>
 
       {/* AUTHORITY */}
-      <section className="mx-auto max-w-4xl px-5 py-16 text-center">
-        <h2 className="text-3xl font-black text-primary">Confianza y Trayectoria</h2>
-        <p className="mt-5 text-lg text-foreground">
-          Hace <strong>más de 30 años</strong> que reparamos electrodomésticos en los hogares de Zona Sur.
-          Trabajamos con <strong>honestidad</strong>: te decimos qué tiene tu equipo y cuánto cuesta, sin vueltas.
-        </p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
-          {[
-            ["30+", "años de oficio"],
-            ["Directo", "con el técnico, sin intermediarios"],
-            ["100%", "presupuesto claro antes de reparar"],
-          ].map(([n, l]) => (
-            <div key={l} className="rounded-xl bg-primary p-5 text-primary-foreground">
-              <p className="font-display text-3xl font-black text-accent">{n}</p>
-              <p className="mt-1 text-sm">{l}</p>
+      <section className="mx-auto max-w-4xl px-5 py-16">
+        <h2 className="text-center text-3xl font-black text-primary">Confianza y Trayectoria</h2>
+        <div className="mt-8 flex flex-col items-center gap-6 rounded-2xl bg-card p-8 shadow-sm md:flex-row md:items-start">
+          <div className="flex shrink-0 flex-col items-center text-center">
+            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-primary text-accent">
+              <BadgeCheck className="h-14 w-14" />
             </div>
-          ))}
+            <p className="mt-2 max-w-[9rem] font-display text-xs font-black uppercase text-primary">Técnico Maestro Certificado</p>
+          </div>
+          <div className="text-lg text-foreground">
+            <p className="font-display text-2xl font-black text-primary">"Soy Pablo."</p>
+            <p className="mt-3">Llevo <strong>más de 30 años</strong> recorriendo los hogares de Zona Sur. Mi compromiso es la <strong>honestidad</strong>: si tu equipo no tiene arreglo, te lo digo sinceramente antes de cobrarte.</p>
+            <p className="mt-3">Cuando me escribís, hablás <strong>directo conmigo</strong>, sin intermediarios ni call centers. El mismo técnico que te atiende es el que repara.</p>
+          </div>
         </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="bg-primary py-16 text-primary-foreground">
+        <div className="mx-auto max-w-6xl px-5">
+          <h2 className="text-center text-3xl font-black">Testimonios de Clientes</h2>
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {testimonials.map((r) => (
+              <figure key={r.n} className="rounded-xl bg-card p-6 text-card-foreground">
+                <div className="flex gap-0.5 text-accent">
+                  {[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-5 w-5" fill="currentColor" />)}
+                </div>
+                <blockquote className="mt-3">"{r.t}"</blockquote>
+                <figcaption className="mt-5 flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary font-display font-black text-primary">{r.n[0]}</div>
+                  <div>
+                    <p className="font-bold text-primary">{r.n}</p>
+                    <p className="text-sm text-muted-foreground">de {r.c}</p>
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ZONES */}
+      <section className="mx-auto max-w-4xl px-5 py-16 text-center">
+        <h2 className="text-3xl font-black text-primary">Zonas de Cobertura</h2>
+        <p className="mt-2 text-muted-foreground">Servicio técnico a domicilio en toda Zona Sur:</p>
+        <ul className="mt-8 flex flex-wrap justify-center gap-3">
+          {CITIES.map((c) => (
+            <li key={c} className="inline-flex items-center gap-1 rounded-full border-2 border-primary px-4 py-2 font-bold text-primary">
+              <MapPin className="h-4 w-4 text-accent" /> {c}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-8"><WaButton label="Coordinar visita GRATIS ahora 📲" /></div>
       </section>
 
       {/* FAQ */}
