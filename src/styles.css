@@ -41,14 +41,14 @@
   --secondary-foreground: oklch(0.3 0.11 262);
   --muted: oklch(0.95 0.01 255);
   --muted-foreground: oklch(0.48 0.03 260);
-  --accent: oklch(0.72 0.17 60);
+  --accent: oklch(0.76 0.2 55);
   --accent-foreground: oklch(0.2 0.05 260);
-  --cta: oklch(0.68 0.19 150);
+  --cta: oklch(0.6 0.22 148);
   --cta-foreground: oklch(1 0 0);
   --border: oklch(0.9 0.015 255);
   --ring: oklch(0.68 0.19 150);
   --gradient-hero: linear-gradient(160deg, oklch(0.22 0.09 262) 0%, oklch(0.32 0.12 258) 100%);
-  --shadow-cta: 0 10px 30px -8px color-mix(in oklab, var(--cta) 60%, transparent);
+  --shadow-cta: 0 12px 32px -6px color-mix(in oklab, var(--cta) 75%, transparent), 0 0 0 3px color-mix(in oklab, var(--cta) 25%, transparent);
 }
 
 @layer base {
