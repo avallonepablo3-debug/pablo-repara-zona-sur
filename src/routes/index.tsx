@@ -51,22 +51,34 @@ const trust = [
 ];
 
 const problems = [
-  { icon: "❄️", t: "Refrigeración", q: ["¿No enfría abajo?", "¿Forma hielo?", "¿Hace mucho ruido?", "¿No para el motor?"] },
-  { icon: "🌀", t: "Lavarropas", q: ["¿No carga agua?", "¿No desagota?", "¿Hace ruidos extraños?"] },
-  { icon: "🍽️", t: "Lavavajillas", q: ["¿No calienta?", "¿No lava bien?", "¿No desagota?"] },
-  { icon: "🔥", t: "Hornos Eléctricos", q: ["¿No calienta?", "¿No enciende?"] },
-];
+  { icon: "❄️", t: "Refrigeración", q: [[Snowflake, "¿No enfría abajo?"], [IceCream, "¿Forma hielo?"], [Volume2, "¿Hace mucho ruido?"], [Cog, "¿No para el motor?"]] },
+  { icon: "🌀", t: "Lavarropas", q: [[Droplet, "¿No carga agua?"], [Droplets, "¿No desagota?"], [Volume2, "¿Hace ruidos extraños?"]] },
+  { icon: "🍽️", t: "Lavavajillas", q: [[Thermometer, "¿No calienta?"], [Sparkles, "¿No lava bien?"], [Droplets, "¿No desagota?"]] },
+  { icon: "🔥", t: "Hornos Eléctricos", q: [[Flame, "¿No calienta?"], [Power, "¿No enciende?"]] },
+] as const;
+
+const CITIES = ["Lanús", "Lomas de Zamora", "Banfield", "Avellaneda", "Quilmes", "Bernal", "Adrogué", "Burzaco", "Almirante Brown"];
 
 const faqs = [
   { q: "¿Cuánto cuesta la visita?", a: "Nada. La visita y el diagnóstico en tu domicilio son totalmente sin cargo. Solo pagás si aceptás el presupuesto." },
   { q: "¿Tienen garantía los trabajos?", a: "Sí. Todos los trabajos tienen 3 meses de garantía por escrito." },
-  { q: "¿En qué zonas trabajan?", a: "Cubrimos toda Zona Sur del Gran Buenos Aires. Consultanos por WhatsApp tu localidad." },
+  { q: "¿En qué zonas trabajan?", a: `Atendemos a domicilio en ${CITIES.slice(0, -1).join(", ")} y ${CITIES[CITIES.length - 1]}.` },
   { q: "¿Qué marcas reparan?", a: "Todas las marcas principales: Whirlpool, Samsung, LG, Drean, Gafa, Electrolux, Patrick, Bosch, Longvie, Peabody y más." },
+];
+
+const testimonials = [
+  { n: "Ricardo", c: "Banfield", t: "Lo que más valoro es la honestidad. Me explicó qué tenía la heladera y me cobró exactamente lo que me dijo. Nada de sorpresas." },
+  { n: "Marta", c: "Lanús", t: "Le escribí a la mañana y a la tarde ya tenía el lavarropas funcionando. Respuesta rapidísima, súper recomendable." },
+  { n: "Jorge", c: "Quilmes", t: "Vinieron dos técnicos antes y ninguno pudo con el lavavajillas. Pablo lo solucionó en una hora. Un genio." },
 ];
 
 function Index() {
   return (
     <main className="pb-24">
+      {/* ANNOUNCEMENT */}
+      <div className="bg-accent py-2 text-center text-xs font-black tracking-wide text-accent-foreground md:text-sm">
+        <span className="animate-pulse">⚡ ATENCIÓN DE URGENCIAS HOY MISMO EN ZONA SUR</span>
+      </div>
       {/* HERO */}
       <section className="relative overflow-hidden bg-hero text-primary-foreground">
         <div className="absolute inset-0 industrial-grid" />
@@ -75,9 +87,14 @@ function Index() {
             <p className="mb-8 font-display text-xl font-black tracking-tight">
               PABLO<span className="text-accent"> SERVICE</span>
             </p>
-            <span className="inline-block rounded-full bg-accent px-3 py-1 text-sm font-bold text-accent-foreground">
-              ✓ Visita sin cargo
-            </span>
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1 rounded-full bg-accent px-3 py-1 text-sm font-bold text-accent-foreground">
+                ✓ Visita sin cargo
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full border border-primary-foreground/40 px-3 py-1 text-sm font-bold">
+                <MapPin className="h-4 w-4" /> Técnico local en Zona Sur
+              </span>
+            </div>
             <h1 className="mt-4 text-3xl font-black leading-tight md:text-5xl">
               Técnico de Electrodomésticos en Zona Sur — <span className="text-accent">Reparación en el Día</span>
             </h1>
