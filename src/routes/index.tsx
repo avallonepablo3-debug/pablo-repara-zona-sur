@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Snowflake, Box, Volume2, Cog, Droplet, Droplets, Thermometer, Sparkles, Flame, Power, MapPin, BadgeCheck, Star } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 import baLav from "@/assets/ba-lavarropas.jpg";
 import baHel from "@/assets/ba-heladera.jpg";
@@ -131,12 +132,14 @@ function Index() {
               <span className="text-4xl">{p.icon}</span>
               <h3 className="mt-3 text-xl font-black text-primary">{p.t}</h3>
               <ul className="mt-3 flex-1 space-y-1.5">
-                {p.q.map((q) => (
-                  <li key={q} className="text-foreground">• {q}</li>
+                {p.q.map(([Icon, q]) => (
+                  <li key={q} className="flex items-center gap-2 text-foreground">
+                    <Icon className="h-5 w-5 shrink-0 text-accent" strokeWidth={2.5} /> {q}
+                  </li>
                 ))}
               </ul>
               <div className="mt-5">
-                <WaButton label="Solucionalo ahora" size="md" />
+                <WaButton label="Coordinar visita GRATIS ahora 📲" size="md" />
               </div>
             </article>
           ))}
