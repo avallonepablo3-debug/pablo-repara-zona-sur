@@ -51,7 +51,7 @@ const trust = [
 ];
 
 const problems = [
-  { icon: "❄️", t: "Refrigeración", q: [[Snowflake, "¿No enfría abajo?"], [IceCream, "¿Forma hielo?"], [Volume2, "¿Hace mucho ruido?"], [Cog, "¿No para el motor?"]] },
+  { icon: "❄️", t: "Refrigeración", q: [[Snowflake, "¿No enfría abajo?"], [Box, "¿Forma hielo?"], [Volume2, "¿Hace mucho ruido?"], [Cog, "¿No para el motor?"]] },
   { icon: "🌀", t: "Lavarropas", q: [[Droplet, "¿No carga agua?"], [Droplets, "¿No desagota?"], [Volume2, "¿Hace ruidos extraños?"]] },
   { icon: "🍽️", t: "Lavavajillas", q: [[Thermometer, "¿No calienta?"], [Sparkles, "¿No lava bien?"], [Droplets, "¿No desagota?"]] },
   { icon: "🔥", t: "Hornos Eléctricos", q: [[Flame, "¿No calienta?"], [Power, "¿No enciende?"]] },
