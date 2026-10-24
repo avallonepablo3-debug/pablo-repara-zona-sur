@@ -23,6 +23,16 @@ describe("landing page content", () => {
     expect(screen.getByRole("heading", { name: "Equipos comerciales" })).toBeInTheDocument();
   });
 
+  it("shows the supplied review locations without invented source labels or stars", () => {
+    render(<Home />);
+
+    for (const barrio of ["Banfield", "Lomas de Zamora", "Lanús"]) {
+      expect(screen.getByText(barrio, { selector: ".review figcaption p" })).toBeInTheDocument();
+    }
+    expect(document.querySelectorAll(".review .text-accent svg")).toHaveLength(0);
+    expect(screen.queryByText("· Zona Sur")).not.toBeInTheDocument();
+  });
+
   it("keeps /gracias noindex and its WhatsApp fallback on WA_URL", () => {
     expect(graciasHead().meta).toContainEqual({
       name: "robots",

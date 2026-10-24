@@ -493,11 +493,13 @@ function Index() {
               {testimonials.map((review) => (
                 <figure key={`${review.name}-${review.barrio}`} className="review">
                   <div className="flex items-center justify-between">
-                    <div className="flex gap-1 text-accent">
-                      {[0, 1, 2, 3, 4].map((i) => (
-                        <Star key={i} className="h-5 w-5" fill="currentColor" />
-                      ))}
-                    </div>
+                    {review.source && (
+                      <div className="flex gap-1 text-accent">
+                        {[0, 1, 2, 3, 4].map((i) => (
+                          <Star key={i} className="h-5 w-5" fill="currentColor" />
+                        ))}
+                      </div>
+                    )}
                     <Quote className="h-7 w-7 text-muted-foreground" />
                   </div>
                   <blockquote className="mt-5 flex-1 text-lg leading-relaxed">“{review.text}”</blockquote>
@@ -508,7 +510,7 @@ function Index() {
                     <div>
                       <p className="font-bold text-primary">{review.name}</p>
                       <p className="text-sm text-muted-foreground">
-                        {review.barrio} {review.source ? `· ${review.source}` : "· Zona Sur"}
+                        {review.source ? `${review.barrio} · ${review.source}` : review.barrio}
                       </p>
                     </div>
                   </figcaption>
