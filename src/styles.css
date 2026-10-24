@@ -187,7 +187,14 @@
   .conversion-page footer h2 { font-size: 34px; }
   .conversion-page footer .mt-12 { margin-top: 28px; }
 }
-@media (max-width: 380px) { .hero-title { font-size: 34px; } .brand-name { font-size: 17px; } .mobile-contact .wa-button { font-size: 17px; } }
+@media (max-width: 380px) {
+  .hero-title { font-size: 34px; margin-block: 10px; }
+  .brand-name { font-size: 17px; }
+  .mobile-contact .wa-button { font-size: 17px; }
+  .hero-content { padding-block: 14px 18px; }
+  .hero-badges > span:last-child { display: none; }
+  .hero-content > p.font-display { font-size: 20px; }
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
