@@ -1,31 +1,105 @@
+﻿import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Snowflake, Box, Volume2, Cog, Droplet, Droplets, Thermometer, Sparkles, Flame, Power, MapPin, BadgeCheck, Star, Wrench, Refrigerator, WashingMachine, CookingPot, ShieldCheck, House, Zap, Check, ArrowUpRight, Quote } from "lucide-react";
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  Box,
+  Building2,
+  Check,
+  Cog,
+  CookingPot,
+  Droplet,
+  Droplets,
+  Flame,
+  House,
+  MapPin,
+  Phone,
+  Power,
+  Quote,
+  Refrigerator,
+  ShieldCheck,
+  Snowflake,
+  Sparkles,
+  Star,
+  Thermometer,
+  Volume2,
+  WashingMachine,
+  Wrench,
+  Zap,
+} from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import hero from "@/assets/hero-1280.webp";
-import heroMobile from "@/assets/hero-640.webp";
-import baLav from "@/assets/ba-lavarropas-960.webp";
-import baLavMobile from "@/assets/ba-lavarropas-480.webp";
-import baHel from "@/assets/ba-heladera-960.webp";
-import baHelMobile from "@/assets/ba-heladera-480.webp";
+import { PHONE, PHONE_COUNTRY, services, URGENCY_TEXT, WA_MESSAGE } from "@/data/config";
+import { coverage } from "@/data/coverage";
+import { faqs } from "@/data/faq";
+import { photos } from "@/data/photos";
+import { testimonials } from "@/data/testimonials";
 
-const WA_NUMBER = "5491122435375";
-const WA_MSG =
-  "Hola Pablo Service, vi tu página y necesito una reparación. ¿Podrías coordinar una visita sin cargo?";
-export const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG)}`;
+export const WA_NUMBER = PHONE_COUNTRY;
+export const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`;
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Pablo Service | Técnico de Electrodomésticos Zona Sur" },
-      { name: "description", content: "Reparación de heladeras, lavarropas, lavavajillas y hornos en Zona Sur. Visita sin cargo, reparación en el día y 3 meses de garantía." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "Pablo Service | Técnico de Electrodomésticos Zona Sur" },
-      { property: "og:description", content: "Más de 30 años de experiencia. Visita y diagnóstico sin cargo en tu domicilio." },
+const siteUrl = import.meta.env.VITE_SITE_URL ?? "https://pablo-repara-zona-sur.vercel.app";
+const googleReviewsUrl = import.meta.env.VITE_GOOGLE_REVIEWS_URL as string | undefined;
+const metaPixelId = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
+const gAdsId = import.meta.env.VITE_GADS_ID as string | undefined;
+const gAdsLabel = import.meta.env.VITE_GADS_CONVERSION_LABEL as string | undefined;
+const gscToken = import.meta.env.VITE_GSC_TOKEN as string | undefined;
+
+const trust = [
+  { icon: House, title: "Visita GRATIS", detail: "Diagnóstico sin cargo" },
+  { icon: BadgeCheck, title: "30+ Años", detail: "Experiencia que responde" },
+  { icon: ShieldCheck, title: "3 Meses", detail: "Garantía por escrito" },
+  { icon: Zap, title: "En el día", detail: "Reparación a domicilio" },
+];
+
+const serviceCards = [
+  {
+    icon: Refrigerator,
+    title: "Refrigeración familiar",
+    symptoms: [
+      [Snowflake, "¿No mantiene el frío?"],
+      [Box, "¿Forma hielo?"],
+      [Volume2, "¿Hace ruido?"],
+      [Cog, "¿El motor no para?"],
     ],
-  }),
-  component: Index,
-});
+  },
+  {
+    icon: WashingMachine,
+    title: "Lavarropas",
+    symptoms: [
+      [Droplet, "¿No carga agua?"],
+      [Droplets, "¿No desagota?"],
+      [Volume2, "¿Hace ruidos extraños?"],
+    ],
+  },
+  {
+    icon: Sparkles,
+    title: "Lavavajillas",
+    symptoms: [
+      [Thermometer, "¿No calienta?"],
+      [Sparkles, "¿No lava bien?"],
+      [Droplets, "¿No desagota?"],
+    ],
+  },
+  {
+    icon: CookingPot,
+    title: "Hornos eléctricos",
+    symptoms: [
+      [Flame, "¿No calienta?"],
+      [Power, "¿No enciende?"],
+    ],
+  },
+  {
+    icon: Building2,
+    title: "Equipos comerciales",
+    symptoms: [
+      [Snowflake, "¿No mantiene el frío?"],
+      [Droplets, "¿Gotea agua?"],
+      [Power, "¿El motor no para?"],
+      [Thermometer, "¿La cámara no llega a temperatura?"],
+    ],
+  },
+] as const;
 
 function WaIcon({ className = "h-6 w-6" }: { className?: string }) {
   return (
@@ -35,94 +109,318 @@ function WaIcon({ className = "h-6 w-6" }: { className?: string }) {
   );
 }
 
-function WaButton({ label = "Coordinar visita GRATIS ahora 📲", size = "lg", className = "" }: { label?: string; size?: "lg" | "md"; className?: string }) {
+function WaButton({
+  label = "Coordinar visita GRATIS ahora 📲",
+  size = "lg",
+  className = "",
+  href = "/gracias",
+}: {
+  label?: string;
+  size?: "lg" | "md";
+  className?: string;
+  href?: string;
+}) {
+  const isExternal = href.startsWith("http");
+
   return (
     <Button asChild variant="whatsapp" className={`wa-button ${size === "md" ? "compact" : ""} ${className}`}>
-      <a href={WA_URL} target="_blank" rel="noopener noreferrer"><WaIcon /><span>{label}</span></a>
+      <a href={href} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined}>
+        <WaIcon />
+        <span>{label}</span>
+      </a>
     </Button>
   );
 }
 
-const trust = [
-  { icon: House, title: "Visita GRATIS", detail: "Diagnóstico sin cargo" },
-  { icon: BadgeCheck, title: "30+ Años", detail: "Experiencia que responde" },
-  { icon: ShieldCheck, title: "3 Meses", detail: "Garantía por escrito" },
-  { icon: Zap, title: "En el día", detail: "Reparación a domicilio" },
-];
+function CallButton({ className = "" }: { className?: string }) {
+  return (
+    <Button asChild variant="secondary" className={`secondary-call ${className}`}>
+      <a href={`tel:${PHONE}`} aria-label="Llamar ahora a Pablo Service">
+        <Phone className="h-5 w-5" />
+        <span>Llamar ahora</span>
+      </a>
+    </Button>
+  );
+}
 
-const problems = [
-  { icon: Refrigerator, t: "Refrigeración", q: [[Snowflake, "¿No enfría abajo?"], [Box, "¿Forma hielo?"], [Volume2, "¿Hace mucho ruido?"], [Cog, "¿No para el motor?"]] },
-  { icon: WashingMachine, t: "Lavarropas", q: [[Droplet, "¿No carga agua?"], [Droplets, "¿No desagota?"], [Volume2, "¿Hace ruidos extraños?"]] },
-  { icon: Sparkles, t: "Lavavajillas", q: [[Thermometer, "¿No calienta?"], [Sparkles, "¿No lava bien?"], [Droplets, "¿No desagota?"]] },
-  { icon: CookingPot, t: "Hornos Eléctricos", q: [[Flame, "¿No calienta?"], [Power, "¿No enciende?"]] },
-] as const;
+function ComparisonSlider({
+  before,
+  after,
+  title,
+  caption,
+}: {
+  before: { src: string; mobileSrc: string; width: number; height: number; alt: string };
+  after: { src: string; mobileSrc: string; width: number; height: number; alt: string };
+  title: string;
+  caption: string;
+}) {
+  const [position, setPosition] = useState(50);
+  const [dragging, setDragging] = useState(false);
+  const frameRef = useRef<HTMLDivElement | null>(null);
 
-const CITIES = ["Lanús", "Lomas de Zamora", "Banfield", "Avellaneda", "Quilmes", "Bernal", "Adrogué", "Burzaco", "Almirante Brown"];
+  const updatePosition = (clientX: number) => {
+    if (!frameRef.current) return;
+    const rect = frameRef.current.getBoundingClientRect();
+    const next = ((clientX - rect.left) / rect.width) * 100;
+    setPosition(Math.min(100, Math.max(0, next)));
+  };
 
-const faqs = [
-  { q: "¿Cuánto cuesta la visita?", a: "Nada. La visita y el diagnóstico en tu domicilio son totalmente sin cargo. Solo pagás si aceptás el presupuesto." },
-  { q: "¿Tienen garantía los trabajos?", a: "Sí. Todos los trabajos tienen 3 meses de garantía por escrito." },
-  { q: "¿En qué zonas trabajan?", a: `Atendemos a domicilio en ${CITIES.slice(0, -1).join(", ")} y ${CITIES[CITIES.length - 1]}.` },
-  { q: "¿Qué marcas reparan?", a: "Todas las marcas principales: Whirlpool, Samsung, LG, Drean, Gafa, Electrolux, Patrick, Bosch, Longvie, Peabody y más." },
-];
+  useEffect(() => {
+    if (!dragging) return;
 
-const testimonials = [
-  { n: "Ricardo", c: "Banfield", t: "Lo que más valoro es la honestidad. Me explicó qué tenía la heladera y me cobró exactamente lo que me dijo. Nada de sorpresas." },
-  { n: "Marta", c: "Lanús", t: "Le escribí a la mañana y a la tarde ya tenía el lavarropas funcionando. Respuesta rapidísima, súper recomendable." },
-  { n: "Jorge", c: "Quilmes", t: "Vinieron dos técnicos antes y ninguno pudo con el lavavajillas. Pablo lo solucionó en una hora. Un genio." },
-];
+    const handlePointerMove = (event: PointerEvent) => updatePosition(event.clientX);
+    const handlePointerUp = () => setDragging(false);
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+    };
+  }, [dragging]);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const step = event.shiftKey ? 10 : 5;
+    if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
+      event.preventDefault();
+      setPosition((current) => Math.max(0, current - step));
+    }
+    if (event.key === "ArrowRight" || event.key === "ArrowUp") {
+      event.preventDefault();
+      setPosition((current) => Math.min(100, current + step));
+    }
+  };
+
+  return (
+    <figure className="comparison-card">
+      <div
+        className="comparison-frame"
+        ref={frameRef}
+        role="slider"
+        tabIndex={0}
+        aria-label={`${title} antes y después`}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(position)}
+        onPointerDown={(event) => {
+          setDragging(true);
+          updatePosition(event.clientX);
+        }}
+        onKeyDown={handleKeyDown}
+      >
+        <img src={before.src} srcSet={`${before.mobileSrc} 480w, ${before.src} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" alt={before.alt} width={before.width} height={before.height} loading="lazy" className="comparison-image comparison-base" />
+        <div className="comparison-overlay" style={{ width: `${position}%` }}>
+          <img src={after.src} srcSet={`${after.mobileSrc} 480w, ${after.src} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" alt={after.alt} width={after.width} height={after.height} loading="lazy" className="comparison-image" />
+        </div>
+        <div className="comparison-divider" style={{ left: `${position}%` }}>
+          <span className="comparison-handle" aria-hidden="true" />
+        </div>
+        <span className="comparison-label comparison-label-before">Antes</span>
+        <span className="comparison-label comparison-label-after">Después</span>
+      </div>
+      <figcaption className="comparison-caption">
+        <div>
+          <h3>{title}</h3>
+          <p>{caption}</p>
+        </div>
+        <Wrench className="h-7 w-7 shrink-0 text-primary" />
+      </figcaption>
+    </figure>
+  );
+}
+
+export const Route = createFileRoute("/")({
+  head: () => {
+    const metaDescription =
+      "Reparación de heladeras familiares y comerciales, lavarropas, lavavajillas y hornos en Zona Sur. Visita sin cargo y urgencias.";
+    const ogImageUrl = import.meta.env.VITE_OG_IMAGE_URL as string | undefined;
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: "Pablo Service",
+      telephone: PHONE,
+      url: siteUrl,
+      areaServed: ["Zona Sur, Buenos Aires", "Lanús", "Lomas de Zamora", "Banfield", "Quilmes"],
+      serviceType: services,
+    };
+
+    return {
+      meta: [
+        { title: "Pablo Service | Técnico de Electrodomésticos Zona Sur" },
+        { name: "description", content: metaDescription },
+        { name: "twitter:card", content: "summary_large_image" },
+        { property: "og:title", content: "Pablo Service | Técnico de Electrodomésticos Zona Sur" },
+        { property: "og:description", content: metaDescription },
+        { property: "og:url", content: siteUrl },
+        { property: "og:locale", content: "es_AR" },
+        ...(ogImageUrl
+          ? [
+              { property: "og:image", content: ogImageUrl },
+              { property: "og:image:width", content: "1200" },
+              { property: "og:image:height", content: "630" },
+            ]
+          : []),
+        ...(gscToken ? [{ name: "google-site-verification", content: gscToken }] : []),
+      ],
+      links: [{ rel: "canonical", href: siteUrl }],
+      scripts: [
+        ...(metaPixelId
+          ? [
+              { src: "https://connect.facebook.net/en_US/fbevents.js", async: true },
+              {
+                children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');`,
+                type: "text/javascript",
+              },
+            ]
+          : []),
+        ...(gAdsId
+          ? [
+              { src: `https://www.googletagmanager.com/gtag/js?id=${gAdsId}`, async: true },
+              {
+                children: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${gAdsId}');`,
+                type: "text/javascript",
+              },
+            ]
+          : []),
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(jsonLd),
+        },
+      ],
+    };
+  },
+  component: Index,
+});
 
 function Index() {
   return (
     <main className="conversion-page flex flex-col">
       <div className="urgency-bar order-0 bg-accent px-4 py-2.5 text-center font-extrabold text-accent-foreground">
-        <span>⚡ ATENCIÓN DE URGENCIAS HOY MISMO EN ZONA SUR</span>
+        <span>{URGENCY_TEXT}</span>
       </div>
+
       <header className="mobile-header order-1 bg-card text-primary">
         <div className="page-width grid min-h-24 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 py-4">
           <div className="brand">
             <Wrench className="brand-icon" strokeWidth={2.5} />
-            <div><p className="brand-name">PABLO <span className="text-muted-foreground">SERVICE</span></p><p className="brand-caption">Servicio técnico · Zona Sur</p></div>
+            <div>
+              <p className="brand-name">
+                PABLO <span className="text-muted-foreground">SERVICE</span>
+              </p>
+              <p className="brand-caption">Servicio técnico · Zona Sur</p>
+            </div>
           </div>
-          <Button asChild variant="whatsapp" className="mobile-quick-contact md:hidden"><a href={WA_URL} target="_blank" rel="noopener noreferrer" aria-label="Coordinar visita gratis por WhatsApp"><WaIcon /></a></Button>
-          <div className="hidden md:block"><WaButton label="Pedí tu visita sin cargo" size="md" /></div>
+          <Button asChild variant="whatsapp" className="mobile-quick-contact md:hidden">
+            <a href="/gracias" aria-label="Coordinar visita gratis por WhatsApp">
+              <WaIcon />
+            </a>
+          </Button>
+          <div className="hidden md:block">
+            <WaButton label="Pedí tu visita sin cargo" size="md" href="/gracias" />
+          </div>
         </div>
       </header>
 
       <section className="hero-section order-2">
-        <img src={hero} srcSet={`${heroMobile} 640w, ${hero} 1280w`} sizes="100vw" alt="Técnico trabajando en la reparación de una heladera" width={1280} height={896} fetchPriority="high" className="hero-photo" />
-        <div className="hero-shade" /><div className="hero-photo-panel" />
+        <img
+          src={photos.hero.src}
+          srcSet={`${photos.hero.mobileSrc} 640w, ${photos.hero.src} 1280w`}
+          sizes="100vw"
+          alt={photos.hero.alt}
+          width={photos.hero.width}
+          height={photos.hero.height}
+          fetchPriority="high"
+          className="hero-photo"
+        />
+        <div className="hero-shade" />
+        <div className="hero-photo-panel" />
         <div className="page-width hero-content relative">
           <div className="hero-badges flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 border border-primary-foreground/40 px-3 py-2 text-xs font-bold uppercase"><MapPin className="h-4 w-4" />Técnico local en Zona Sur</span>
-            <span className="inline-flex items-center gap-2 bg-highlight px-3 py-2 text-sm font-extrabold uppercase text-primary"><Check className="h-4 w-4" />Visita sin cargo</span>
+            <span className="inline-flex items-center gap-2 border border-primary-foreground/40 px-3 py-2 text-xs font-bold uppercase">
+              <MapPin className="h-4 w-4" />
+              Técnico local en Zona Sur
+            </span>
+            <span className="inline-flex items-center gap-2 bg-highlight px-3 py-2 text-sm font-extrabold uppercase text-primary">
+              <Check className="h-4 w-4" />
+              Visita sin cargo
+            </span>
           </div>
-          <h1 className="hero-title">Técnico de<br />electrodomésticos<br /><span className="text-highlight">en Zona Sur.</span></h1>
+
+          <h1 className="hero-title">
+            Técnico de
+            <br />
+            electrodomésticos
+            <br />
+            <span className="text-highlight">en Zona Sur.</span>
+          </h1>
           <p className="mb-3 font-display text-3xl font-extrabold uppercase">Reparación en el día. Sin vueltas.</p>
-          <p className="hero-copy">Heladeras, lavarropas, lavavajillas y hornos eléctricos. Más de 30 años de experiencia, directo en tu domicilio.</p>
-          <div className="mt-7"><WaButton className="hero-cta" /></div>
-          <p className="hero-guarantee mt-5 flex items-center gap-2 text-sm font-semibold"><ShieldCheck className="h-5 w-5 shrink-0 text-cta" /><span>Visita y diagnóstico GRATIS · 3 meses de garantía</span></p>
-          <div className="authority-stamp hero-stamp"><strong>30+</strong><span>Años de experiencia</span><Wrench className="mx-auto mt-3 h-6 w-6" /></div>
+          <p className="hero-copy">
+            Heladeras familiares y comerciales, lavarropas, lavavajillas, hornos eléctricos, exhibidoras, cámaras de frío y cavas de vino.
+          </p>
+
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            <WaButton className="hero-cta" href="/gracias" />
+            <CallButton className="hero-call" />
+            <Button asChild variant="secondary" className="secondary-scroll-link">
+              <a href="#servicios">Ver qué reparamos</a>
+            </Button>
+          </div>
+
+          <p className="hero-guarantee mt-5 flex items-center gap-2 text-sm font-semibold">
+            <ShieldCheck className="h-5 w-5 shrink-0 text-cta" />
+            <span>Visita y diagnóstico GRATIS · 3 meses de garantía</span>
+          </p>
+          <div className="authority-stamp hero-stamp">
+            <strong>30+</strong>
+            <span>Años de experiencia</span>
+            <Wrench className="mx-auto mt-3 h-6 w-6" />
+          </div>
         </div>
       </section>
 
       <section className="order-3 border-b-4 border-b-accent bg-card" aria-label="Compromisos de Pablo Service">
         <div className="page-width grid grid-cols-1 md:grid-cols-4">
-          {trust.map(({ icon: Icon, title, detail }) => <div key={title} className="trust-item"><Icon className="h-8 w-8 shrink-0 text-primary" strokeWidth={2.5} /><div><strong>{title}</strong><p>{detail}</p></div></div>)}
+          {trust.map(({ icon: Icon, title, detail }) => (
+            <div key={title} className="trust-item">
+              <Icon className="h-8 w-8 shrink-0 text-primary" strokeWidth={2.5} />
+              <div>
+                <strong>{title}</strong>
+                <p>{detail}</p>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="border-t py-4 text-center"><WaButton label="Solicitar visita sin cargo" size="md" /></div>
+        <div className="border-t py-4 text-center">
+          <WaButton label="Solicitar visita sin cargo" size="md" href="/gracias" />
+        </div>
       </section>
 
-      <section className="section-space order-4 bg-secondary">
+      <section id="servicios" className="section-space order-4 bg-secondary">
         <div className="page-width">
           <div className="section-kicker text-muted-foreground">Servicio técnico especializado</div>
           <h2 className="text-primary">¿Qué le pasa a tu electrodoméstico?</h2>
           <p className="mt-4 text-lg text-muted-foreground">Contanos el síntoma. Pablo se ocupa de la solución.</p>
-          <div className="mt-9 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {problems.map(({ icon: Icon, t, q }) => <article key={t} className="catalog-card">
-              <div className="catalog-top"><Icon className="h-10 w-10 shrink-0 text-highlight" strokeWidth={1.8} /><h3>{t}</h3></div>
-              <div className="catalog-body"><ul className="mb-6 flex-1">{q.map(([Symptom, text]) => <li key={text}><Symptom />{text}</li>)}</ul><WaButton size="md" /></div>
-            </article>)}
+          <div className="mt-9 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+            {serviceCards.map(({ icon: Icon, title, symptoms }) => (
+              <article key={title} className="catalog-card">
+                <div className="catalog-top">
+                  <Icon className="h-10 w-10 shrink-0 text-highlight" strokeWidth={1.8} />
+                  <h3>{title}</h3>
+                </div>
+                <div className="catalog-body">
+                  <ul className="mb-6 flex-1">
+                    {symptoms.map(([Symptom, text]) => (
+                      <li key={text}>
+                        <Symptom />
+                        {text}
+                      </li>
+                    ))}
+                  </ul>
+                  <WaButton size="md" href="/gracias" />
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -133,64 +431,222 @@ function Index() {
           <h2 className="text-primary">Trabajos realizados</h2>
           <p className="mt-4 text-lg text-muted-foreground">Antes y después de nuestras reparaciones.</p>
           <div className="mt-9 grid gap-8 md:grid-cols-2">
-            {[{ img: baLav, mobile: baLavMobile, t: "Lavarropas", detail: "Cambio de bomba y limpieza total" }, { img: baHel, mobile: baHelMobile, t: "Heladera", detail: "Cambio de motocompresor" }].map((w) => <figure key={w.t} className="overflow-hidden border bg-secondary shadow-solid">
-              <img src={w.img} srcSet={`${w.mobile} 480w, ${w.img} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" decoding="async" alt={`${w.t} — ${w.detail}`} width={1024} height={768} loading="lazy" className="aspect-[4/3] w-full object-cover" />
-              <figcaption className="flex items-center justify-between gap-3 border-t-4 border-t-accent p-5"><div><h3 className="text-2xl uppercase text-primary">{w.t}</h3><p className="mt-1 text-sm font-semibold">{w.detail}</p></div><Wrench className="h-7 w-7 shrink-0 text-primary" /></figcaption>
-            </figure>)}
+            {photos.beforeAfter.map((job) => (
+              <ComparisonSlider
+                key={job.title}
+                before={job.before}
+                after={job.after}
+                title={job.title}
+                caption={job.caption}
+              />
+            ))}
           </div>
-          <div className="mt-9 text-center"><WaButton /></div>
+          <div className="mt-9 text-center">
+            <WaButton href="/gracias" />
+          </div>
         </div>
       </section>
 
       <section className="section-space order-7 bg-primary text-primary-foreground md:order-6">
         <div className="page-width grid items-center gap-10 lg:grid-cols-[.9fr_1.1fr]">
           <div className="relative">
-            <img src={hero} srcSet={`${heroMobile} 640w, ${hero} 1280w`} sizes="(max-width: 767px) calc(100vw - 32px), 540px" decoding="async" alt="Trabajo técnico de reparación de electrodomésticos" width={1280} height={896} loading="lazy" className="profile-photo" />
-            <div className="flex items-center justify-between gap-4 border-t-4 border-t-accent bg-steel p-5 text-steel-foreground"><div><p className="font-display text-3xl font-extrabold uppercase">Pablo Service</p><p className="mt-1 text-sm">Servicio técnico a domicilio · Zona Sur</p></div><BadgeCheck className="h-10 w-10 shrink-0 text-highlight" /></div>
+            <img
+              src={photos.profile.src}
+              srcSet={`${photos.profile.mobileSrc} 480w, ${photos.profile.src} 960w`}
+              sizes="(max-width: 767px) calc(100vw - 32px), 540px"
+              decoding="async"
+              alt={photos.profile.alt}
+              width={photos.profile.width}
+              height={photos.profile.height}
+              loading="lazy"
+              className="profile-photo"
+            />
+            <div className="flex items-center justify-between gap-4 border-t-4 border-t-accent bg-steel p-5 text-steel-foreground">
+              <div>
+                <p className="font-display text-3xl font-extrabold uppercase">Pablo Service</p>
+                <p className="mt-1 text-sm">Servicio técnico a domicilio · Zona Sur</p>
+              </div>
+              <BadgeCheck className="h-10 w-10 shrink-0 text-highlight" />
+            </div>
           </div>
           <div>
             <div className="section-kicker">Confianza y trayectoria</div>
-            <h2>30 años de oficio.<br /><span className="text-highlight">La confianza de tu barrio.</span></h2>
+            <h2>
+              30 años de oficio.
+              <br />
+              <span className="text-highlight">La confianza de tu barrio.</span>
+            </h2>
             <p className="mt-6 font-display text-3xl font-bold">“Soy Pablo.”</p>
-            <p className="mt-3 text-lg leading-relaxed">Llevo <strong>más de 30 años</strong> recorriendo los hogares de Zona Sur. Mi compromiso es la <strong>honestidad</strong>: si tu equipo no tiene arreglo, te lo digo sinceramente antes de cobrarte.</p>
-            <p className="mt-4 text-lg leading-relaxed">Cuando me escribís, hablás <strong>directo conmigo</strong>, sin intermediarios ni call centers. El mismo técnico que te atiende es el que repara.</p>
-            <div className="profile-promises mt-6 flex flex-wrap gap-4 border-y border-primary-foreground/25 py-4 text-sm font-bold"><span className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-highlight" />Garantía por escrito</span><span className="flex items-center gap-2"><House className="h-5 w-5 text-highlight" />Visita GRATIS</span></div>
-            <div className="mt-7"><WaButton label="Hablar directo con Pablo 📲" /></div>
+            <p className="mt-3 text-lg leading-relaxed">
+              Llevo <strong>más de 30 años</strong> trabajando con heladeras familiares y comerciales, lavarropas,
+              lavavajillas, hornos eléctricos, exhibidoras, cámaras de frío y cavas de vino. Mi compromiso es la
+              <strong> honestidad</strong>: si tu equipo no tiene arreglo, te lo digo sinceramente antes de cobrarte.
+            </p>
+            <p className="mt-4 text-lg leading-relaxed">
+              Cuando me escribís, hablás <strong>directo conmigo</strong>, sin intermediarios ni call centers. El mismo técnico que te atiende es el que repara.
+            </p>
+            <div className="profile-promises mt-6 flex flex-wrap gap-4 border-y border-primary-foreground/25 py-4 text-sm font-bold">
+              <span className="flex items-center gap-2">
+                <ShieldCheck className="h-5 w-5 text-highlight" />
+                Garantía por escrito
+              </span>
+              <span className="flex items-center gap-2">
+                <House className="h-5 w-5 text-highlight" />
+                Visita GRATIS
+              </span>
+            </div>
+            <div className="mt-7">
+              <WaButton label="Hablar directo con Pablo 📲" href="/gracias" />
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section-space order-5 bg-secondary md:order-7">
-        <div className="page-width">
-          <div className="section-kicker text-muted-foreground">Pablo en tu barrio</div>
-          <h2 className="text-primary">Testimonios de clientes</h2>
-          <div className="mt-9 grid gap-6 md:grid-cols-3">
-            {testimonials.map((r) => <figure key={r.n} className="review"><div className="flex items-center justify-between"><div className="flex gap-1 text-accent">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-5 w-5" fill="currentColor" />)}</div><Quote className="h-7 w-7 text-muted-foreground" /></div><blockquote className="mt-5 flex-1 text-lg leading-relaxed">“{r.t}”</blockquote><figcaption className="mt-6 flex items-center gap-3 border-t pt-5"><div className="flex h-11 w-11 items-center justify-center bg-primary font-display text-2xl font-bold text-primary-foreground">{r.n[0]}</div><div><p className="font-bold text-primary">{r.n}</p><p className="text-sm text-muted-foreground">{r.c} · Zona Sur</p></div></figcaption></figure>)}
+      {testimonials.length > 0 && (
+        <section className="section-space order-5 bg-secondary md:order-7">
+          <div className="page-width">
+            <div className="section-kicker text-muted-foreground">Pablo en tu barrio</div>
+            <h2 className="text-primary">Testimonios de clientes</h2>
+            <div className="mt-9 grid gap-6 md:grid-cols-3">
+              {testimonials.map((review) => (
+                <figure key={`${review.name}-${review.barrio}`} className="review">
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-1 text-accent">
+                      {[0, 1, 2, 3, 4].map((i) => (
+                        <Star key={i} className="h-5 w-5" fill="currentColor" />
+                      ))}
+                    </div>
+                    <Quote className="h-7 w-7 text-muted-foreground" />
+                  </div>
+                  <blockquote className="mt-5 flex-1 text-lg leading-relaxed">“{review.text}”</blockquote>
+                  <figcaption className="mt-6 flex items-center gap-3 border-t pt-5">
+                    <div className="flex h-11 w-11 items-center justify-center bg-primary font-display text-2xl font-bold text-primary-foreground">
+                      {review.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-bold text-primary">{review.name}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {review.barrio} {review.source ? `· ${review.source}` : "· Zona Sur"}
+                      </p>
+                    </div>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <div className="mt-9 text-center">
+              <WaButton href="/gracias" />
+            </div>
           </div>
-          <div className="mt-9 text-center"><WaButton /></div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="section-space order-8 bg-card">
         <div className="page-width grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
-          <div><div className="section-kicker text-muted-foreground">Estamos cerca</div><h2 className="text-primary">Zonas de<br />cobertura</h2><p className="mt-4 text-lg text-muted-foreground">Servicio técnico a domicilio en toda Zona Sur. Sin intermediarios. Sin cargo por la visita.</p><div className="mt-6"><WaButton /></div></div>
-          <div><div className="mb-5 flex items-center gap-3 text-primary"><MapPin className="h-9 w-9" /><p className="font-display text-3xl font-extrabold uppercase">Zona Sur, Buenos Aires</p></div><ul className="zone-list">{CITIES.map((c) => <li key={c}><MapPin />{c}</li>)}</ul></div>
+          <div>
+            <div className="section-kicker text-muted-foreground">Estamos cerca</div>
+            <h2 className="text-primary">
+              Zonas de
+              <br />
+              cobertura
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Servicio técnico a domicilio en la zona sur. Sin intermediarios. Sin cargo por la visita.
+            </p>
+            <div className="mt-6">
+              <WaButton href="/gracias" />
+            </div>
+          </div>
+          <div>
+            <div className="mb-5 flex items-center gap-3 text-primary">
+              <MapPin className="h-9 w-9" />
+              <p className="font-display text-3xl font-extrabold uppercase">Zona Sur, Buenos Aires</p>
+            </div>
+            <ul className="zone-list">
+              {coverage.map((city) => (
+                <li key={city}>
+                  <MapPin />
+                  {city}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
       <section className="section-space order-9 bg-secondary">
         <div className="page-width grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
-          <div><div className="section-kicker text-muted-foreground">Sin letra chica</div><h2 className="text-primary">Preguntas<br />frecuentes</h2><p className="mt-4 text-lg text-muted-foreground">Hablá con Pablo y coordiná tu visita.</p><div className="mt-6"><WaButton label="Consultar por WhatsApp" /></div></div>
-          <div>{faqs.map((f) => <details key={f.q} className="faq-item group"><summary className="text-primary">{f.q}<span className="text-3xl text-primary transition-transform group-open:rotate-45">+</span></summary><p className="text-muted-foreground">{f.a}</p></details>)}</div>
+          <div>
+            <div className="section-kicker text-muted-foreground">Preguntas frecuentes</div>
+            <h2 className="text-primary">Todo lo que necesitás saber</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Si tenés dudas antes de escribir, acá está la información más útil.
+            </p>
+            <div className="mt-7">
+              <WaButton label="Hablar por WhatsApp" href="/gracias" />
+            </div>
+          </div>
+          <div>
+            {faqs.map((faq) => (
+              <details key={faq.q} className="faq-item">
+                <summary>
+                  <span>{faq.q}</span>
+                  <ArrowUpRight className="h-6 w-6 shrink-0 text-primary" />
+                </summary>
+                <p>{faq.a}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 
-      <footer className="section-space order-10 border-t-8 border-t-accent bg-steel text-steel-foreground">
-        <div className="page-width text-center"><div className="section-kicker justify-center">Pablo Service · Servicio técnico</div><h2 className="text-5xl md:text-6xl">¿Tu electrodoméstico<br />dejó de funcionar?</h2><p className="mt-4 font-display text-3xl font-bold uppercase text-highlight">No pierdas tiempo.</p><div className="mt-8"><WaButton className="hero-cta" /></div><p className="mt-6 text-sm">30+ años de experiencia · Visita sin cargo · 3 meses de garantía</p><div className="mt-12 border-t border-steel-foreground/20 pt-6 text-xs">© Pablo Service — Servicio Técnico · Zona Sur, Buenos Aires</div></div>
+      <footer className="order-10 bg-primary pb-28 pt-16 text-primary-foreground md:pb-20">
+        <div className="page-width">
+          <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="section-kicker text-primary-foreground/80">Pablo Service</div>
+              <h2>Reparo lo que te hace falta.</h2>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <WaButton label="Solicitar reparación" href="/gracias" />
+              {googleReviewsUrl ? (
+                <Button asChild variant="secondary" className="secondary-scroll-link">
+                  <a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer">
+                    Ver opiniones en Google
+                  </a>
+                </Button>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-6 border-t border-primary-foreground/15 pt-8 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="font-display text-3xl font-extrabold uppercase">Servicio técnico en Zona Sur</p>
+              <p className="mt-2 text-base text-primary-foreground/80">Atención por WhatsApp y llamadas directas.</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <a href={`tel:${PHONE}`} className="inline-flex items-center gap-2 font-bold text-primary-foreground hover:text-highlight">
+                <Phone className="h-4 w-4" />
+                {PHONE}
+              </a>
+              <a href="/gracias" className="inline-flex items-center gap-2 font-bold text-primary-foreground hover:text-highlight">
+                <WaIcon className="h-4 w-4" />
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
       </footer>
 
-      <div className="mobile-contact fixed inset-x-0 bottom-0 z-50 md:hidden"><WaButton label="Coordinar Visita GRATIS ahora 📲" /></div>
-      <Button asChild variant="whatsapp" className="fixed bottom-6 right-6 z-50 hidden h-16 gap-3 rounded px-5 text-base md:inline-flex [&_svg]:size-7"><a href={WA_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><WaIcon /><span>WhatsApp</span><ArrowUpRight className="h-5 w-5" /></a></Button>
+      <div className="mobile-contact md:hidden">
+        <div className="grid grid-cols-[1.35fr_0.65fr] gap-2">
+          <WaButton label="WhatsApp" size="md" href="/gracias" className="mobile-whatsapp-button" />
+          <CallButton className="mobile-call-button" />
+        </div>
+      </div>
     </main>
   );
+}
+
+export default function Home() {
+  return <Index />;
 }
