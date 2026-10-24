@@ -214,9 +214,9 @@ function ComparisonSlider({
         }}
         onKeyDown={handleKeyDown}
       >
-        <img src={before.src} srcSet={`${before.mobileSrc} 480w, ${before.src} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" alt={before.alt} width={before.width} height={before.height} loading="lazy" className="comparison-image comparison-base" />
+        <img src={after.src} srcSet={`${after.mobileSrc} 480w, ${after.src} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" alt={after.alt} width={after.width} height={after.height} loading="lazy" className="comparison-image comparison-base" />
         <div className="comparison-overlay" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
-          <img src={after.src} srcSet={`${after.mobileSrc} 480w, ${after.src} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" alt={after.alt} width={after.width} height={after.height} loading="lazy" className="comparison-image" />
+          <img src={before.src} srcSet={`${before.mobileSrc} 480w, ${before.src} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" alt={before.alt} width={before.width} height={before.height} loading="lazy" className="comparison-image" />
         </div>
         <div className="comparison-divider" style={{ left: `${position}%` }}>
           <span className="comparison-handle" aria-hidden="true" />
