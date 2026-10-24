@@ -190,6 +190,14 @@ function ComparisonSlider({
       event.preventDefault();
       setPosition((current) => Math.min(100, current + step));
     }
+    if (event.key === "Home") {
+      event.preventDefault();
+      setPosition(0);
+    }
+    if (event.key === "End") {
+      event.preventDefault();
+      setPosition(100);
+    }
   };
 
   return (
@@ -204,13 +212,14 @@ function ComparisonSlider({
         aria-valuemax={100}
         aria-valuenow={Math.round(position)}
         onPointerDown={(event) => {
+          event.currentTarget.setPointerCapture(event.pointerId);
           setDragging(true);
           updatePosition(event.clientX);
         }}
         onKeyDown={handleKeyDown}
       >
         <img src={before.src} srcSet={`${before.mobileSrc} 480w, ${before.src} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" alt={before.alt} width={before.width} height={before.height} loading="lazy" className="comparison-image comparison-base" />
-        <div className="comparison-overlay" style={{ width: `${position}%` }}>
+        <div className="comparison-overlay" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
           <img src={after.src} srcSet={`${after.mobileSrc} 480w, ${after.src} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" alt={after.alt} width={after.width} height={after.height} loading="lazy" className="comparison-image" />
         </div>
         <div className="comparison-divider" style={{ left: `${position}%` }}>
