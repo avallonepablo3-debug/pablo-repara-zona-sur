@@ -4,6 +4,6 @@
 - [x] Verify desktop/mobile layout, FAQ interaction and every WhatsApp link.
 
 # Mobile-first redesign
-- [ ] Rework mobile header, thumb CTA, single-column content and first-screen hierarchy.
-- [ ] Deliver smaller responsive images and remove mobile animation.
-- [ ] Verify mobile layouts, 48px targets, FAQ and WhatsApp contact flow.
+- [x] Rework mobile header, thumb CTA, single-column content and first-screen hierarchy.
+- [x] Deliver smaller responsive images and remove mobile animation.
+- [x] Verify mobile layouts, 48px targets, FAQ and WhatsApp contact flow.
