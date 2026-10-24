@@ -246,7 +246,7 @@ export const Route = createFileRoute("/")({
       name: "Pablo Service",
       telephone: PHONE,
       url: siteUrl,
-      areaServed: ["Zona Sur, Buenos Aires", "Lanús", "Lomas de Zamora", "Banfield", "Quilmes"],
+      areaServed: coverage,
       serviceType: services,
     };
 

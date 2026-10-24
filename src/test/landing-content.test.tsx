@@ -33,6 +33,16 @@ describe("landing page content", () => {
     expect(screen.queryByText("· Zona Sur")).not.toBeInTheDocument();
   });
 
+  it("limits visible coverage and the barrios FAQ to the confirmed localities", () => {
+    render(<Home />);
+
+    for (const barrio of ["Lomas de Zamora", "Banfield", "Lanús"]) {
+      expect(screen.getByText(barrio, { selector: ".zone-list li" })).toBeInTheDocument();
+    }
+    expect(screen.queryByText("Quilmes")).not.toBeInTheDocument();
+    expect(screen.getByText("Atendemos en Lomas de Zamora, Banfield y Lanús.")).toBeInTheDocument();
+  });
+
   it("keeps /gracias noindex and its WhatsApp fallback on WA_URL", () => {
     expect(graciasHead().meta).toContainEqual({
       name: "robots",

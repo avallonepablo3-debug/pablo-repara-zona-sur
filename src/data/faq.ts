@@ -9,7 +9,7 @@ export const faqs = [
   },
   {
     q: "¿En qué barrios de Zona Sur trabajan?",
-    a: "Consultalo por WhatsApp y Pablo te confirma si llega a tu barrio.",
+    a: "Atendemos en Lomas de Zamora, Banfield y Lanús.",
   },
   {
     q: "¿Repara todas las marcas?",
