@@ -77,7 +77,7 @@
 .section-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-weight: 800; font-size: 13px; text-transform: uppercase; }
 .section-kicker::before { content: ''; width: 26px; height: 4px; background: var(--accent); }
 .brand { display: flex; align-items: center; gap: 12px; }
-.brand-icon { width: 50px; height: 54px; padding: 9px; background: var(--primary); color: var(--primary-foreground); border-bottom: 5px solid var(--accent); }
+.brand-icon { width: 50px; height: 54px; padding: 4px 5px 6px; background: var(--primary); object-fit: contain; border-bottom: 5px solid var(--accent); }
 .brand-name { font-family: var(--font-brand); font-size: 27px; line-height: 1; }
 .brand-caption { font-size: 11px; font-weight: 700; margin-top: 6px; text-transform: uppercase; }
 .hero-section { position: relative; isolation: isolate; background: var(--primary); color: var(--primary-foreground); overflow: hidden; }
@@ -170,7 +170,7 @@
   .brand { min-width: 0; gap: 8px; }
   .brand-name { font-size: 19px; }
   .brand-caption { font-size: 10px; margin-top: 4px; }
-  .brand-icon { width: 34px; height: 40px; padding: 6px; flex-shrink: 0; }
+  .brand-icon { width: 34px; height: 40px; padding: 3px; flex-shrink: 0; }
   .hero-content { padding-block: 20px 24px; }
   .hero-badges { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; justify-items: start; }
   .hero-badges > span { padding-block: 4px; }

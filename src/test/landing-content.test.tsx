@@ -24,6 +24,12 @@ describe("landing page content", () => {
     expect(screen.getByRole("heading", { name: "Equipos comerciales" })).toBeInTheDocument();
   });
 
+  it("shows the Pablo Service logo on its blue header tile", () => {
+    render(<Home />);
+
+    expect(screen.getByRole("img", { name: "Pablo Service" })).toHaveClass("brand-icon");
+  });
+
   it("shows the supplied review locations without invented source labels or stars", () => {
     render(<Home />);
 

@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.svg";
 import { PHONE, PHONE_COUNTRY, services, URGENCY_TEXT, WA_MESSAGE } from "@/data/config";
 import { coverage } from "@/data/coverage";
 import { faqs } from "@/data/faq";
@@ -273,7 +274,7 @@ function Index() {
       <header className="mobile-header order-1 bg-card text-primary">
         <div className="page-width grid min-h-24 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 py-4">
           <div className="brand">
-            <Wrench className="brand-icon" strokeWidth={2.5} />
+            <img src={logo} alt="Pablo Service" className="brand-icon" />
             <div>
               <p className="brand-name">
                 PABLO <span className="text-muted-foreground">SERVICE</span>
