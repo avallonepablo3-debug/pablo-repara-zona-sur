@@ -43,6 +43,19 @@ describe("landing page content", () => {
     expect(screen.getByText("Atendemos en Lomas de Zamora, Banfield y Lanús.")).toBeInTheDocument();
   });
 
+  it("offers contact only through WhatsApp and uses the full-width sticky CTA", () => {
+    render(<Home />);
+
+    expect(screen.queryByRole("link", { name: /llamar/i })).not.toBeInTheDocument();
+    expect(document.querySelector('a[href^="tel:"]')).not.toBeInTheDocument();
+    expect(screen.getByText("Atención por WhatsApp.")).toBeInTheDocument();
+    expect(screen.queryByText("Atención por WhatsApp y llamadas directas.")).not.toBeInTheDocument();
+
+    const stickyBar = document.querySelector(".mobile-contact");
+    expect(stickyBar?.querySelectorAll(".wa-button")).toHaveLength(1);
+    expect(stickyBar?.querySelector(".wa-button")).toHaveTextContent("WhatsApp");
+  });
+
   it("keeps /gracias noindex and its WhatsApp fallback on WA_URL", () => {
     expect(graciasHead().meta).toContainEqual({
       name: "robots",

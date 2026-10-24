@@ -13,7 +13,6 @@ import {
   Flame,
   House,
   MapPin,
-  Phone,
   Power,
   Quote,
   Refrigerator,
@@ -123,17 +122,6 @@ function WaButton({
       <a href={href} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined}>
         <WaIcon />
         <span>{label}</span>
-      </a>
-    </Button>
-  );
-}
-
-function CallButton({ className = "" }: { className?: string }) {
-  return (
-    <Button asChild variant="secondary" className={`secondary-call ${className}`}>
-      <a href={`tel:${PHONE}`} aria-label="Llamar ahora a Pablo Service">
-        <Phone className="h-5 w-5" />
-        <span>Llamar ahora</span>
       </a>
     </Button>
   );
@@ -343,7 +331,6 @@ function Index() {
 
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <WaButton className="hero-cta" href="/gracias" />
-            <CallButton className="hero-call" />
             <Button asChild variant="secondary" className="secondary-scroll-link">
               <a href="#servicios">Ver qué reparamos</a>
             </Button>
@@ -607,13 +594,9 @@ function Index() {
           <div className="flex flex-col gap-6 border-t border-primary-foreground/15 pt-8 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="font-display text-3xl font-extrabold uppercase">Servicio técnico en Zona Sur</p>
-              <p className="mt-2 text-base text-primary-foreground/80">Atención por WhatsApp y llamadas directas.</p>
+              <p className="mt-2 text-base text-primary-foreground/80">Atención por WhatsApp.</p>
             </div>
             <div className="flex flex-wrap items-center gap-3">
-              <a href={`tel:${PHONE}`} className="inline-flex items-center gap-2 font-bold text-primary-foreground hover:text-highlight">
-                <Phone className="h-4 w-4" />
-                {PHONE}
-              </a>
               <a href="/gracias" className="inline-flex items-center gap-2 font-bold text-primary-foreground hover:text-highlight">
                 <WaIcon className="h-4 w-4" />
                 WhatsApp
@@ -624,9 +607,8 @@ function Index() {
       </footer>
 
       <div className="mobile-contact md:hidden">
-        <div className="grid grid-cols-[1.35fr_0.65fr] gap-2">
+        <div>
           <WaButton label="WhatsApp" size="md" href="/gracias" className="mobile-whatsapp-button" />
-          <CallButton className="mobile-call-button" />
         </div>
       </div>
     </main>

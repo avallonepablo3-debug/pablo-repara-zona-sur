@@ -95,9 +95,8 @@
 .wa-button svg { width: 26px; height: 26px; }
 .wa-button.compact { min-height: 58px; padding: 13px 14px; font-size: 16px; }
 .wa-button.hero-cta { min-height: 76px; font-size: 23px; padding-inline: 30px; }
-.secondary-call, .secondary-scroll-link { min-height: 48px; }
-.secondary-call a, .secondary-scroll-link a { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; width: 100%; }
-.secondary-call { min-width: 170px; }
+.secondary-scroll-link { min-height: 48px; }
+.secondary-scroll-link a { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; width: 100%; }
 .trust-item { display: flex; gap: 15px; align-items: center; padding: 25px 20px; border-right: 1px solid var(--border); }
 .trust-item:last-child { border-right: 0; }
 .trust-item strong { display: block; font: 800 30px/1 var(--font-display); text-transform: uppercase; color: var(--primary); }
