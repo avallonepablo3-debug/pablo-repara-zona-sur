@@ -91,12 +91,14 @@ describe("landing page content", () => {
 
     expect(screen.queryByRole("link", { name: /llamar/i })).not.toBeInTheDocument();
     expect(document.querySelector('a[href^="tel:"]')).not.toBeInTheDocument();
+    expect(document.querySelector(".mobile-header .mobile-quick-contact")).not.toBeInTheDocument();
     expect(screen.getByText("Atención por WhatsApp.")).toBeInTheDocument();
     expect(screen.queryByText("Atención por WhatsApp y llamadas directas.")).not.toBeInTheDocument();
 
     const stickyBar = document.querySelector(".mobile-contact");
     expect(stickyBar?.querySelectorAll(".wa-button")).toHaveLength(1);
-    expect(stickyBar?.querySelector(".wa-button")).toHaveTextContent("WhatsApp");
+    expect(stickyBar?.querySelector(".wa-button")).toHaveTextContent("Coordinar visita GRATIS");
+    expect(document.querySelectorAll(".catalog-card .wa-button")).toHaveLength(0);
   });
 
   it("keeps /gracias noindex and its WhatsApp fallback on WA_URL", () => {

@@ -132,10 +132,8 @@
 .faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; list-style: none; font: 700 24px/1.2 var(--font-display); padding-block: 22px; }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item p { padding-bottom: 22px; line-height: 1.6; }
-.mobile-contact { padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: var(--steel); border-top: 3px solid var(--cta); }
+.mobile-contact { position: fixed; z-index: 50; inset-inline: 0; bottom: 0; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: var(--steel); border-top: 3px solid var(--cta); }
 .mobile-contact .wa-button { width: 100%; min-height: 66px; font-size: 19px; }
-.mobile-quick-contact { width: 48px; height: 48px; padding: 10px; }
-.mobile-quick-contact svg { width: 26px; height: 26px; }
 .urgency-bar { font-size: 13px; line-height: 1.35; }
 .conversion-page a, .conversion-page button { min-height: 48px; }
 @media (min-width: 1024px) { .hero-stamp { position: absolute; right: 40px; top: 65px; } }

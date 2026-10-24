@@ -282,11 +282,6 @@ function Index() {
               <p className="brand-caption">Servicio técnico · Zona Sur</p>
             </div>
           </div>
-          <Button asChild variant="whatsapp" className="mobile-quick-contact md:hidden">
-            <a href="/gracias" aria-label="Coordinar visita gratis por WhatsApp">
-              <WaIcon />
-            </a>
-          </Button>
           <div className="hidden md:block">
             <WaButton label="Pedí tu visita sin cargo" size="md" href="/gracias" />
           </div>
@@ -388,7 +383,7 @@ function Index() {
                   <h3>{title}</h3>
                 </div>
                 <div className="catalog-body">
-                  <ul className="mb-6 flex-1">
+                  <ul className="flex-1">
                     {symptoms.map(([Symptom, text]) => (
                       <li key={text}>
                         <Symptom />
@@ -396,7 +391,6 @@ function Index() {
                       </li>
                     ))}
                   </ul>
-                  <WaButton size="md" href="/gracias" />
                 </div>
               </article>
             ))}
@@ -597,9 +591,7 @@ function Index() {
       </footer>
 
       <div className="mobile-contact md:hidden">
-        <div>
-          <WaButton label="WhatsApp" size="md" href="/gracias" className="mobile-whatsapp-button" />
-        </div>
+        <WaButton label="Coordinar visita GRATIS" size="md" href="/gracias" className="mobile-whatsapp-button" />
       </div>
     </main>
   );
