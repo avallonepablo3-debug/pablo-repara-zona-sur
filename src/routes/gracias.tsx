@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { WA_URL } from "@/routes/index";
@@ -7,6 +7,11 @@ import { WA_URL } from "@/routes/index";
 const metaPixelId = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
 const gAdsId = import.meta.env.VITE_GADS_ID as string | undefined;
 const gAdsLabel = import.meta.env.VITE_GADS_CONVERSION_LABEL as string | undefined;
+
+type TrackingWindow = Window & {
+  fbq?: (...args: unknown[]) => void;
+  gtag?: (...args: unknown[]) => void;
+};
 
 export const Route = createFileRoute("/gracias")({
   head: () => ({
@@ -19,39 +24,37 @@ export const Route = createFileRoute("/gracias")({
 });
 
 function Gracias() {
-  const [redirecting, setRedirecting] = useState(true);
+  const startedRef = useRef(false);
 
   useEffect(() => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+
+    const trackingWindow = window as TrackingWindow;
+    let redirected = false;
     const redirect = () => {
-      setRedirecting(false);
+      if (redirected) return;
+      redirected = true;
       window.location.assign(WA_URL);
     };
 
-    const gtagAvailable = typeof window !== "undefined" && typeof (window as any).gtag === "function";
-    const fbqAvailable = typeof window !== "undefined" && typeof (window as any).fbq === "function";
-
-    if (metaPixelId && fbqAvailable) {
-      (window as any).fbq("track", "Lead", {}, { eventCallback: redirect });
+    if (metaPixelId && trackingWindow.fbq) {
+      trackingWindow.fbq("track", "Lead");
     }
 
-    if (gAdsId && gAdsLabel && gtagAvailable) {
-      (window as any).gtag("event", "conversion", {
+    if (gAdsId && gAdsLabel && trackingWindow.gtag) {
+      trackingWindow.gtag("event", "conversion", {
         send_to: `${gAdsId}/${gAdsLabel}`,
+        event_callback: redirect,
       });
     }
 
-    const timer = window.setTimeout(() => {
-      if (redirecting) {
-        redirect();
-      }
-    }, 500);
+    window.setTimeout(redirect, 500);
 
-    if (!metaPixelId && !gAdsId) {
+    if (!metaPixelId && !(gAdsId && gAdsLabel)) {
       redirect();
     }
-
-    return () => window.clearTimeout(timer);
-  }, [redirecting]);
+  }, []);
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-secondary px-4 py-12 text-foreground">
