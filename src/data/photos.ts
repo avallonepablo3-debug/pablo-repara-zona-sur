@@ -1,16 +1,13 @@
-import hero1280Fallback from "@/assets/hero-1280.webp";
-import hero640Fallback from "@/assets/hero-640.webp";
-import baHel960Fallback from "@/assets/ba-heladera-960.webp";
-import baHel480Fallback from "@/assets/ba-heladera-480.webp";
-
-const generatedPhotos = import.meta.glob<string>("../assets/*.webp", {
-  eager: true,
-  import: "default",
-});
-
-function photo(name: string, fallback: string): string {
-  return generatedPhotos[`../assets/${name}`] ?? fallback;
-}
+import hero1280 from "@/assets/hero-1280.webp";
+import hero640 from "@/assets/hero-640.webp";
+import job1Antes960 from "@/assets/job1-antes-960.webp";
+import job1Antes480 from "@/assets/job1-antes-480.webp";
+import job1Despues960 from "@/assets/job1-despues-960.webp";
+import job1Despues480 from "@/assets/job1-despues-480.webp";
+import job2Antes960 from "@/assets/job2-antes-960.webp";
+import job2Antes480 from "@/assets/job2-antes-480.webp";
+import job2Despues960 from "@/assets/job2-despues-960.webp";
+import job2Despues480 from "@/assets/job2-despues-480.webp";
 
 export type PhotoAsset = {
   src: string;
@@ -22,33 +19,26 @@ export type PhotoAsset = {
 
 export const photos = {
   hero: {
-    src: photo("hero-1280.webp", hero1280Fallback),
-    mobileSrc: photo("hero-640.webp", hero640Fallback),
+    src: hero1280,
+    mobileSrc: hero640,
     width: 1280,
     height: 896,
     alt: "Taller de Pablo Service con heladeras y lavarropas en reparación",
-  } satisfies PhotoAsset,
-  profile: {
-    src: photo("profile-960.webp", baHel960Fallback),
-    mobileSrc: photo("profile-480.webp", baHel480Fallback),
-    width: 960,
-    height: 720,
-    alt: "Pablo atendiendo una heladera en el hogar del cliente",
   } satisfies PhotoAsset,
   beforeAfter: [
     {
       title: "Condensadora",
       caption: "Condensadora",
       before: {
-        src: photo("job1-antes-960.webp", baHel960Fallback),
-        mobileSrc: photo("job1-antes-480.webp", baHel480Fallback),
+        src: job1Antes960,
+        mobileSrc: job1Antes480,
         width: 960,
         height: 720,
         alt: "Condensadora antes de la reparación",
       },
       after: {
-        src: photo("job1-despues-960.webp", baHel960Fallback),
-        mobileSrc: photo("job1-despues-480.webp", baHel480Fallback),
+        src: job1Despues960,
+        mobileSrc: job1Despues480,
         width: 960,
         height: 720,
         alt: "Condensadora después de la reparación",
@@ -58,15 +48,15 @@ export const photos = {
       title: "Lavarropas",
       caption: "Lavarropas",
       before: {
-        src: photo("job2-antes-960.webp", baHel960Fallback),
-        mobileSrc: photo("job2-antes-480.webp", baHel480Fallback),
+        src: job2Antes960,
+        mobileSrc: job2Antes480,
         width: 960,
         height: 720,
         alt: "Lavarropas antes de la reparación",
       },
       after: {
-        src: photo("job2-despues-960.webp", baHel960Fallback),
-        mobileSrc: photo("job2-despues-480.webp", baHel480Fallback),
+        src: job2Despues960,
+        mobileSrc: job2Despues480,
         width: 960,
         height: 720,
         alt: "Lavarropas después de la reparación",

@@ -124,7 +124,6 @@
 .comparison-caption { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 4px solid var(--accent); padding: 18px 20px; }
 .comparison-caption h3 { color: var(--primary); font-size: 26px; text-transform: uppercase; }
 .comparison-caption p { margin-top: 4px; font-size: 14px; font-weight: 600; }
-.profile-photo { width: 100%; height: 420px; object-fit: cover; object-position: 65% center; }
 .review { background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--accent); padding: 28px; display: flex; flex-direction: column; }
 .zone-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--border); }
 .zone-list li { display: flex; align-items: center; gap: 9px; padding: 17px 10px; border-bottom: 1px solid var(--border); font-weight: 700; }
@@ -202,8 +201,6 @@
   .comparison-caption h3 { font-size: 23px; }
   .zone-list { grid-template-columns: minmax(0, 1fr); }
   .zone-list li { font-size: 17px; padding: 12px 0; }
-  .profile-photo { height: auto; aspect-ratio: 4 / 3; }
-  .profile-promises { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; font-size: 16px; }
   .faq-item summary { min-height: 64px; font-size: 23px; padding-block: 18px; }
   .conversion-page footer h2 { font-size: 34px; }
   .conversion-page footer .mt-12 { margin-top: 28px; }

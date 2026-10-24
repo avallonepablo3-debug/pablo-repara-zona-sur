@@ -53,11 +53,23 @@ describe("landing page content", () => {
 
   it("uses the correct generated before/after photo pairs and neutral captions", () => {
     expect(photos.hero.alt).toBe("Taller de Pablo Service con heladeras y lavarropas en reparación");
+    expect(Object.keys(photos)).not.toContain("profile");
     expect(photos.beforeAfter.map(({ caption }) => caption)).toEqual(["Condensadora", "Lavarropas"]);
     expect(photos.beforeAfter[0].before.src).toContain("job1-antes-960");
     expect(photos.beforeAfter[0].after.src).toContain("job1-despues-960");
     expect(photos.beforeAfter[1].before.src).toContain("job2-antes-960");
     expect(photos.beforeAfter[1].after.src).toContain("job2-despues-960");
+  });
+
+  it("keeps the trust section centered in one text-only column", () => {
+    render(<Home />);
+
+    const heading = screen.getByText("Confianza y trayectoria");
+    const section = heading.closest("section");
+    expect(section?.querySelector(".mx-auto.max-w-3xl")).toBeInTheDocument();
+    expect(section?.querySelector("img")).not.toBeInTheDocument();
+    expect(section?.querySelector(".bg-steel")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Hablar directo con Pablo/ })).toBeInTheDocument();
   });
 
   it("offers contact only through WhatsApp and uses the full-width sticky CTA", () => {

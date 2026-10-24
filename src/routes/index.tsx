@@ -426,29 +426,9 @@ function Index() {
       </section>
 
       <section className="section-space order-7 bg-primary text-primary-foreground md:order-6">
-        <div className="page-width grid items-center gap-10 lg:grid-cols-[.9fr_1.1fr]">
-          <div className="relative">
-            <img
-              src={photos.profile.src}
-              srcSet={`${photos.profile.mobileSrc} 480w, ${photos.profile.src} 960w`}
-              sizes="(max-width: 767px) calc(100vw - 32px), 540px"
-              decoding="async"
-              alt={photos.profile.alt}
-              width={photos.profile.width}
-              height={photos.profile.height}
-              loading="lazy"
-              className="profile-photo"
-            />
-            <div className="flex items-center justify-between gap-4 border-t-4 border-t-accent bg-steel p-5 text-steel-foreground">
-              <div>
-                <p className="font-display text-3xl font-extrabold uppercase">Pablo Service</p>
-                <p className="mt-1 text-sm">Servicio técnico a domicilio · Zona Sur</p>
-              </div>
-              <BadgeCheck className="h-10 w-10 shrink-0 text-highlight" />
-            </div>
-          </div>
-          <div>
-            <div className="section-kicker">Confianza y trayectoria</div>
+        <div className="page-width">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="section-kicker justify-center">Confianza y trayectoria</div>
             <h2>
               30 años de oficio.
               <br />
@@ -463,7 +443,7 @@ function Index() {
             <p className="mt-4 text-lg leading-relaxed">
               Cuando me escribís, hablás <strong>directo conmigo</strong>, sin intermediarios ni call centers. El mismo técnico que te atiende es el que repara.
             </p>
-            <div className="profile-promises mt-6 flex flex-wrap gap-4 border-y border-primary-foreground/25 py-4 text-sm font-bold">
+            <div className="mt-6 flex flex-wrap justify-center gap-4 border-y border-primary-foreground/25 py-4 text-sm font-bold">
               <span className="flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5 text-highlight" />
                 Garantía por escrito
@@ -473,7 +453,7 @@ function Index() {
                 Visita GRATIS
               </span>
             </div>
-            <div className="mt-7">
+            <div className="mt-7 flex justify-center">
               <WaButton label="Hablar directo con Pablo 📲" href="/gracias" />
             </div>
           </div>
