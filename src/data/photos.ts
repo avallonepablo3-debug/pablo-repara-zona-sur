@@ -1,7 +1,5 @@
 import hero1280Fallback from "@/assets/hero-1280.webp";
 import hero640Fallback from "@/assets/hero-640.webp";
-import baLav960Fallback from "@/assets/ba-lavarropas-960.webp";
-import baLav480Fallback from "@/assets/ba-lavarropas-480.webp";
 import baHel960Fallback from "@/assets/ba-heladera-960.webp";
 import baHel480Fallback from "@/assets/ba-heladera-480.webp";
 
@@ -28,7 +26,7 @@ export const photos = {
     mobileSrc: photo("hero-640.webp", hero640Fallback),
     width: 1280,
     height: 896,
-    alt: "Pablo Service revisando un electrodoméstico en Zona Sur",
+    alt: "Taller de Pablo Service con heladeras y lavarropas en reparación",
   } satisfies PhotoAsset,
   profile: {
     src: photo("profile-960.webp", baHel960Fallback),
@@ -39,39 +37,39 @@ export const photos = {
   } satisfies PhotoAsset,
   beforeAfter: [
     {
-      title: "Lavarropas",
-      caption: "Lavarropas",
+      title: "Condensadora",
+      caption: "Condensadora",
       before: {
-        src: photo("job1-antes-960.webp", baLav960Fallback),
-        mobileSrc: photo("job1-antes-480.webp", baLav480Fallback),
+        src: photo("job1-antes-960.webp", baHel960Fallback),
+        mobileSrc: photo("job1-antes-480.webp", baHel480Fallback),
         width: 960,
         height: 720,
-        alt: "Lavarropas antes de la reparación",
+        alt: "Condensadora antes de la reparación",
       },
       after: {
-        src: photo("job1-despues-960.webp", baLav960Fallback),
-        mobileSrc: photo("job1-despues-480.webp", baLav480Fallback),
+        src: photo("job1-despues-960.webp", baHel960Fallback),
+        mobileSrc: photo("job1-despues-480.webp", baHel480Fallback),
         width: 960,
         height: 720,
-        alt: "Lavarropas después de la reparación",
+        alt: "Condensadora después de la reparación",
       },
     },
     {
-      title: "Heladera",
-      caption: "Heladera",
+      title: "Lavarropas",
+      caption: "Lavarropas",
       before: {
         src: photo("job2-antes-960.webp", baHel960Fallback),
         mobileSrc: photo("job2-antes-480.webp", baHel480Fallback),
         width: 960,
         height: 720,
-        alt: "Heladera antes de la reparación",
+        alt: "Lavarropas antes de la reparación",
       },
       after: {
         src: photo("job2-despues-960.webp", baHel960Fallback),
         mobileSrc: photo("job2-despues-480.webp", baHel480Fallback),
         width: 960,
         height: 720,
-        alt: "Heladera después de la reparación",
+        alt: "Lavarropas después de la reparación",
       },
     },
   ],

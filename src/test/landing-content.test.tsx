@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import Home, { WA_URL } from "@/routes/index";
 import { graciasHead, WhatsAppFallback } from "@/routes/gracias";
+import { photos } from "@/data/photos";
 
 function getSourceFiles(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -48,6 +49,15 @@ describe("landing page content", () => {
 
     expect(screen.getByText("Sí, Pablo repara todas las marcas.")).toBeInTheDocument();
     expect(screen.getByText("Pablo acepta todos los medios de pago.")).toBeInTheDocument();
+  });
+
+  it("uses the correct generated before/after photo pairs and neutral captions", () => {
+    expect(photos.hero.alt).toBe("Taller de Pablo Service con heladeras y lavarropas en reparación");
+    expect(photos.beforeAfter.map(({ caption }) => caption)).toEqual(["Condensadora", "Lavarropas"]);
+    expect(photos.beforeAfter[0].before.src).toContain("job1-antes-960");
+    expect(photos.beforeAfter[0].after.src).toContain("job1-despues-960");
+    expect(photos.beforeAfter[1].before.src).toContain("job2-antes-960");
+    expect(photos.beforeAfter[1].after.src).toContain("job2-despues-960");
   });
 
   it("offers contact only through WhatsApp and uses the full-width sticky CTA", () => {
