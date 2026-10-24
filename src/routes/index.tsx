@@ -435,14 +435,14 @@ function Index() {
               <br />
               <span className="text-highlight">La confianza de tu barrio.</span>
             </h2>
-            <p className="mt-6 font-display text-3xl font-bold">“Soy Pablo.”</p>
+            <p className="mt-6 font-display text-3xl font-bold">Hola, soy Pablo.</p>
             <p className="mt-3 text-lg leading-relaxed">
               Llevo <strong>más de 30 años</strong> trabajando con heladeras familiares y comerciales, lavarropas,
               lavavajillas, hornos eléctricos, exhibidoras, cámaras de frío y cavas de vino. Mi compromiso es la
               <strong> honestidad</strong>: si tu equipo no tiene arreglo, te lo digo sinceramente antes de cobrarte.
             </p>
             <p className="mt-4 text-lg leading-relaxed">
-              Cuando me escribís, hablás <strong>directo conmigo</strong>, sin intermediarios ni call centers. El mismo técnico que te atiende es el que repara.
+              Cuando me escribís, hablás <strong>directo conmigo</strong>. El mismo técnico que te atiende es el que repara.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-4 border-y border-primary-foreground/25 py-4 text-sm font-bold">
               <span className="flex items-center gap-2">
@@ -567,7 +567,7 @@ function Index() {
           <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <div className="section-kicker text-primary-foreground/80">Pablo Service</div>
-              <h2>Reparo lo que te hace falta.</h2>
+              <h2>¿Necesitás reparar un electrodoméstico?</h2>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <WaButton label="Solicitar reparación" href="/gracias" />

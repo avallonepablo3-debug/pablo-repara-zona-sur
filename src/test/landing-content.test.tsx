@@ -75,7 +75,15 @@ describe("landing page content", () => {
     expect(section?.querySelector(".mx-auto.max-w-3xl")).toBeInTheDocument();
     expect(section?.querySelector("img")).not.toBeInTheDocument();
     expect(section?.querySelector(".bg-steel")).not.toBeInTheDocument();
+    expect(screen.getByText("Hola, soy Pablo.")).toBeInTheDocument();
+    expect(screen.queryByText(/call.?centers?/i)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Hablar directo con Pablo/ })).toBeInTheDocument();
+  });
+
+  it("uses a natural voseo question in the footer", () => {
+    render(<Home />);
+
+    expect(screen.getByRole("heading", { name: "¿Necesitás reparar un electrodoméstico?" })).toBeInTheDocument();
   });
 
   it("offers contact only through WhatsApp and uses the full-width sticky CTA", () => {
