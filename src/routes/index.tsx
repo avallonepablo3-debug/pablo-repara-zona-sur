@@ -335,6 +335,15 @@ function Index() {
               <a href="#servicios">Ver qué reparamos</a>
             </Button>
           </div>
+          {googleReviewsUrl ? (
+            <div className="mt-3">
+              <Button asChild variant="secondary" className="secondary-scroll-link">
+                <a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer">
+                  Ver opiniones en Google
+                </a>
+              </Button>
+            </div>
+          ) : null}
 
           <p className="hero-guarantee mt-5 flex items-center gap-2 text-sm font-semibold">
             <ShieldCheck className="h-5 w-5 shrink-0 text-cta" />
