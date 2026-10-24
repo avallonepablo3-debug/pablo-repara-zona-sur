@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Snowflake, Box, Volume2, Cog, Droplet, Droplets, Thermometer, Sparkles, Flame, Power, MapPin, BadgeCheck, Star, Wrench, Refrigerator, WashingMachine, CookingPot, ShieldCheck, House, Zap, Check, ArrowUpRight, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import hero from "@/assets/hero.jpg";
-import baLav from "@/assets/ba-lavarropas.jpg";
-import baHel from "@/assets/ba-heladera.jpg";
+import hero from "@/assets/hero-1280.webp";
+import heroMobile from "@/assets/hero-640.webp";
+import baLav from "@/assets/ba-lavarropas-960.webp";
+import baLavMobile from "@/assets/ba-lavarropas-480.webp";
+import baHel from "@/assets/ba-heladera-960.webp";
+import baHelMobile from "@/assets/ba-heladera-480.webp";
 
 const WA_NUMBER = "5491122435375";
 const WA_MSG =
@@ -71,25 +74,26 @@ const testimonials = [
 
 function Index() {
   return (
-    <main className="pb-24 md:pb-0">
-      <div className="bg-accent px-4 py-2.5 text-center text-xs font-extrabold text-accent-foreground sm:text-sm">
-        <span className="animate-pulse">⚡ ATENCIÓN DE URGENCIAS HOY MISMO EN ZONA SUR</span>
+    <main className="conversion-page flex flex-col">
+      <div className="urgency-bar order-0 bg-accent px-4 py-2.5 text-center font-extrabold text-accent-foreground">
+        <span>⚡ ATENCIÓN DE URGENCIAS HOY MISMO EN ZONA SUR</span>
       </div>
-      <header className="bg-card text-primary">
-        <div className="page-width flex min-h-24 items-center justify-between gap-4 py-4">
+      <header className="mobile-header order-1 bg-card text-primary">
+        <div className="page-width grid min-h-24 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 py-4">
           <div className="brand">
             <Wrench className="brand-icon" strokeWidth={2.5} />
             <div><p className="brand-name">PABLO <span className="text-muted-foreground">SERVICE</span></p><p className="brand-caption">Servicio técnico · Zona Sur</p></div>
           </div>
+          <Button asChild variant="whatsapp" className="mobile-quick-contact md:hidden"><a href={WA_URL} target="_blank" rel="noopener noreferrer" aria-label="Coordinar visita gratis por WhatsApp"><WaIcon /></a></Button>
           <div className="hidden md:block"><WaButton label="Pedí tu visita sin cargo" size="md" /></div>
         </div>
       </header>
 
-      <section className="hero-section">
-        <img src={hero} alt="Técnico trabajando en la reparación de una heladera" width={1280} height={896} fetchPriority="high" className="hero-photo" />
+      <section className="hero-section order-2">
+        <img src={hero} srcSet={`${heroMobile} 640w, ${hero} 1280w`} sizes="100vw" alt="Técnico trabajando en la reparación de una heladera" width={1280} height={896} fetchPriority="high" className="hero-photo" />
         <div className="hero-shade" /><div className="hero-photo-panel" />
         <div className="page-width hero-content relative">
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="hero-badges flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-2 border border-primary-foreground/40 px-3 py-2 text-xs font-bold uppercase"><MapPin className="h-4 w-4" />Técnico local en Zona Sur</span>
             <span className="inline-flex items-center gap-2 bg-highlight px-3 py-2 text-sm font-extrabold uppercase text-primary"><Check className="h-4 w-4" />Visita sin cargo</span>
           </div>
@@ -97,24 +101,24 @@ function Index() {
           <p className="mb-3 font-display text-3xl font-extrabold uppercase">Reparación en el día. Sin vueltas.</p>
           <p className="hero-copy">Heladeras, lavarropas, lavavajillas y hornos eléctricos. Más de 30 años de experiencia, directo en tu domicilio.</p>
           <div className="mt-7"><WaButton className="hero-cta" /></div>
-          <p className="mt-5 flex items-center gap-2 text-sm font-semibold"><ShieldCheck className="h-5 w-5 text-cta" /> Visita y diagnóstico GRATIS · 3 meses de garantía</p>
+          <p className="hero-guarantee mt-5 flex items-center gap-2 text-sm font-semibold"><ShieldCheck className="h-5 w-5 shrink-0 text-cta" /><span>Visita y diagnóstico GRATIS · 3 meses de garantía</span></p>
           <div className="authority-stamp hero-stamp"><strong>30+</strong><span>Años de experiencia</span><Wrench className="mx-auto mt-3 h-6 w-6" /></div>
         </div>
       </section>
 
-      <section className="border-b-4 border-b-accent bg-card" aria-label="Compromisos de Pablo Service">
-        <div className="page-width grid grid-cols-2 md:grid-cols-4">
+      <section className="order-3 border-b-4 border-b-accent bg-card" aria-label="Compromisos de Pablo Service">
+        <div className="page-width grid grid-cols-1 md:grid-cols-4">
           {trust.map(({ icon: Icon, title, detail }) => <div key={title} className="trust-item"><Icon className="h-8 w-8 shrink-0 text-primary" strokeWidth={2.5} /><div><strong>{title}</strong><p>{detail}</p></div></div>)}
         </div>
         <div className="border-t py-4 text-center"><WaButton label="Solicitar visita sin cargo" size="md" /></div>
       </section>
 
-      <section className="section-space bg-secondary">
+      <section className="section-space order-4 bg-secondary">
         <div className="page-width">
           <div className="section-kicker text-muted-foreground">Servicio técnico especializado</div>
           <h2 className="text-primary">¿Qué le pasa a tu electrodoméstico?</h2>
           <p className="mt-4 text-lg text-muted-foreground">Contanos el síntoma. Pablo se ocupa de la solución.</p>
-          <div className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-9 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             {problems.map(({ icon: Icon, t, q }) => <article key={t} className="catalog-card">
               <div className="catalog-top"><Icon className="h-10 w-10 shrink-0 text-highlight" strokeWidth={1.8} /><h3>{t}</h3></div>
               <div className="catalog-body"><ul className="mb-6 flex-1">{q.map(([Symptom, text]) => <li key={text}><Symptom />{text}</li>)}</ul><WaButton size="md" /></div>
@@ -123,14 +127,14 @@ function Index() {
         </div>
       </section>
 
-      <section className="section-space bg-card">
+      <section className="section-space order-6 bg-card md:order-5">
         <div className="page-width">
           <div className="section-kicker text-muted-foreground">De la falla a la solución</div>
           <h2 className="text-primary">Trabajos realizados</h2>
           <p className="mt-4 text-lg text-muted-foreground">Antes y después de nuestras reparaciones.</p>
           <div className="mt-9 grid gap-8 md:grid-cols-2">
-            {[{ img: baLav, t: "Lavarropas", detail: "Cambio de bomba y limpieza total" }, { img: baHel, t: "Heladera", detail: "Cambio de motocompresor" }].map((w) => <figure key={w.t} className="overflow-hidden border bg-secondary shadow-solid">
-              <img src={w.img} alt={`${w.t} — ${w.detail}`} width={1024} height={768} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+            {[{ img: baLav, mobile: baLavMobile, t: "Lavarropas", detail: "Cambio de bomba y limpieza total" }, { img: baHel, mobile: baHelMobile, t: "Heladera", detail: "Cambio de motocompresor" }].map((w) => <figure key={w.t} className="overflow-hidden border bg-secondary shadow-solid">
+              <img src={w.img} srcSet={`${w.mobile} 480w, ${w.img} 960w`} sizes="(max-width: 767px) calc(100vw - 32px), 560px" decoding="async" alt={`${w.t} — ${w.detail}`} width={1024} height={768} loading="lazy" className="aspect-[4/3] w-full object-cover" />
               <figcaption className="flex items-center justify-between gap-3 border-t-4 border-t-accent p-5"><div><h3 className="text-2xl uppercase text-primary">{w.t}</h3><p className="mt-1 text-sm font-semibold">{w.detail}</p></div><Wrench className="h-7 w-7 shrink-0 text-primary" /></figcaption>
             </figure>)}
           </div>
@@ -138,10 +142,10 @@ function Index() {
         </div>
       </section>
 
-      <section className="section-space bg-primary text-primary-foreground">
+      <section className="section-space order-7 bg-primary text-primary-foreground md:order-6">
         <div className="page-width grid items-center gap-10 lg:grid-cols-[.9fr_1.1fr]">
           <div className="relative">
-            <img src={hero} alt="Trabajo técnico de reparación de electrodomésticos" width={1280} height={896} loading="lazy" className="profile-photo" />
+            <img src={hero} srcSet={`${heroMobile} 640w, ${hero} 1280w`} sizes="(max-width: 767px) calc(100vw - 32px), 540px" decoding="async" alt="Trabajo técnico de reparación de electrodomésticos" width={1280} height={896} loading="lazy" className="profile-photo" />
             <div className="flex items-center justify-between gap-4 border-t-4 border-t-accent bg-steel p-5 text-steel-foreground"><div><p className="font-display text-3xl font-extrabold uppercase">Pablo Service</p><p className="mt-1 text-sm">Servicio técnico a domicilio · Zona Sur</p></div><BadgeCheck className="h-10 w-10 shrink-0 text-highlight" /></div>
           </div>
           <div>
@@ -150,13 +154,13 @@ function Index() {
             <p className="mt-6 font-display text-3xl font-bold">“Soy Pablo.”</p>
             <p className="mt-3 text-lg leading-relaxed">Llevo <strong>más de 30 años</strong> recorriendo los hogares de Zona Sur. Mi compromiso es la <strong>honestidad</strong>: si tu equipo no tiene arreglo, te lo digo sinceramente antes de cobrarte.</p>
             <p className="mt-4 text-lg leading-relaxed">Cuando me escribís, hablás <strong>directo conmigo</strong>, sin intermediarios ni call centers. El mismo técnico que te atiende es el que repara.</p>
-            <div className="mt-6 flex flex-wrap gap-4 border-y border-primary-foreground/25 py-4 text-sm font-bold"><span className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-highlight" />Garantía por escrito</span><span className="flex items-center gap-2"><House className="h-5 w-5 text-highlight" />Visita GRATIS</span></div>
+            <div className="profile-promises mt-6 flex flex-wrap gap-4 border-y border-primary-foreground/25 py-4 text-sm font-bold"><span className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-highlight" />Garantía por escrito</span><span className="flex items-center gap-2"><House className="h-5 w-5 text-highlight" />Visita GRATIS</span></div>
             <div className="mt-7"><WaButton label="Hablar directo con Pablo 📲" /></div>
           </div>
         </div>
       </section>
 
-      <section className="section-space bg-secondary">
+      <section className="section-space order-5 bg-secondary md:order-7">
         <div className="page-width">
           <div className="section-kicker text-muted-foreground">Pablo en tu barrio</div>
           <h2 className="text-primary">Testimonios de clientes</h2>
@@ -167,25 +171,25 @@ function Index() {
         </div>
       </section>
 
-      <section className="section-space bg-card">
+      <section className="section-space order-8 bg-card">
         <div className="page-width grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
           <div><div className="section-kicker text-muted-foreground">Estamos cerca</div><h2 className="text-primary">Zonas de<br />cobertura</h2><p className="mt-4 text-lg text-muted-foreground">Servicio técnico a domicilio en toda Zona Sur. Sin intermediarios. Sin cargo por la visita.</p><div className="mt-6"><WaButton /></div></div>
           <div><div className="mb-5 flex items-center gap-3 text-primary"><MapPin className="h-9 w-9" /><p className="font-display text-3xl font-extrabold uppercase">Zona Sur, Buenos Aires</p></div><ul className="zone-list">{CITIES.map((c) => <li key={c}><MapPin />{c}</li>)}</ul></div>
         </div>
       </section>
 
-      <section className="section-space bg-secondary">
+      <section className="section-space order-9 bg-secondary">
         <div className="page-width grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
           <div><div className="section-kicker text-muted-foreground">Sin letra chica</div><h2 className="text-primary">Preguntas<br />frecuentes</h2><p className="mt-4 text-lg text-muted-foreground">Hablá con Pablo y coordiná tu visita.</p><div className="mt-6"><WaButton label="Consultar por WhatsApp" /></div></div>
           <div>{faqs.map((f) => <details key={f.q} className="faq-item group"><summary className="text-primary">{f.q}<span className="text-3xl text-primary transition-transform group-open:rotate-45">+</span></summary><p className="text-muted-foreground">{f.a}</p></details>)}</div>
         </div>
       </section>
 
-      <footer className="section-space border-t-8 border-t-accent bg-steel text-steel-foreground">
+      <footer className="section-space order-10 border-t-8 border-t-accent bg-steel text-steel-foreground">
         <div className="page-width text-center"><div className="section-kicker justify-center">Pablo Service · Servicio técnico</div><h2 className="text-5xl md:text-6xl">¿Tu electrodoméstico<br />dejó de funcionar?</h2><p className="mt-4 font-display text-3xl font-bold uppercase text-highlight">No pierdas tiempo.</p><div className="mt-8"><WaButton className="hero-cta" /></div><p className="mt-6 text-sm">30+ años de experiencia · Visita sin cargo · 3 meses de garantía</p><div className="mt-12 border-t border-steel-foreground/20 pt-6 text-xs">© Pablo Service — Servicio Técnico · Zona Sur, Buenos Aires</div></div>
       </footer>
 
-      <div className="mobile-contact fixed inset-x-0 bottom-0 z-50 md:hidden"><WaButton label="Coordinar visita GRATIS ahora 📲" /></div>
+      <div className="mobile-contact fixed inset-x-0 bottom-0 z-50 md:hidden"><WaButton label="Coordinar Visita GRATIS ahora 📲" /></div>
       <Button asChild variant="whatsapp" className="fixed bottom-6 right-6 z-50 hidden h-16 gap-3 rounded px-5 text-base md:inline-flex [&_svg]:size-7"><a href={WA_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><WaIcon /><span>WhatsApp</span><ArrowUpRight className="h-5 w-5" /></a></Button>
     </main>
   );
