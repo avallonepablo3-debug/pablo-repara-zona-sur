@@ -1,7 +1,7 @@
 export const faqs = [
   {
     q: "¿Cuánto cuesta la visita?",
-    a: "La visita y el diagnóstico en tu domicilio son sin cargo. Solo pagás si aceptás el presupuesto.",
+    a: "La visita y el diagnóstico en tu domicilio son sin cargo.",
   },
   {
     q: "¿Tienen garantía los trabajos?",
@@ -9,11 +9,11 @@ export const faqs = [
   },
   {
     q: "¿En qué barrios de Zona Sur trabajan?",
-    a: "Atendemos en toda la zona sur del conurbano bonaerense, con servicio a domicilio en los barrios y localidades donde trabajamos habitualmente.",
+    a: "Consultalo por WhatsApp y Pablo te confirma si llega a tu barrio.",
   },
   {
     q: "¿Repara todas las marcas?",
-    a: "Sí. Pablo repara la gran mayoría de marcas de electrodomésticos y equipos del mercado, con diagnóstico y solución honestos.",
+    a: "Consultalo por WhatsApp y Pablo te confirma si trabaja con tu marca.",
   },
   {
     q: "¿Cuánto tarda la reparación?",

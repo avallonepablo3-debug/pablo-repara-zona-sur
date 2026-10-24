@@ -522,38 +522,40 @@ function Index() {
         </section>
       )}
 
-      <section className="section-space order-8 bg-card">
-        <div className="page-width grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
-          <div>
-            <div className="section-kicker text-muted-foreground">Estamos cerca</div>
-            <h2 className="text-primary">
-              Zonas de
-              <br />
-              cobertura
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Servicio técnico a domicilio en la zona sur. Sin intermediarios. Sin cargo por la visita.
-            </p>
-            <div className="mt-6">
-              <WaButton href="/gracias" />
+      {coverage.length > 0 && (
+        <section className="section-space order-8 bg-card">
+          <div className="page-width grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
+            <div>
+              <div className="section-kicker text-muted-foreground">Estamos cerca</div>
+              <h2 className="text-primary">
+                Zonas de
+                <br />
+                cobertura
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Servicio técnico a domicilio en la zona sur. Sin intermediarios. Sin cargo por la visita.
+              </p>
+              <div className="mt-6">
+                <WaButton href="/gracias" />
+              </div>
+            </div>
+            <div>
+              <div className="mb-5 flex items-center gap-3 text-primary">
+                <MapPin className="h-9 w-9" />
+                <p className="font-display text-3xl font-extrabold uppercase">Zona Sur, Buenos Aires</p>
+              </div>
+              <ul className="zone-list">
+                {coverage.map((city) => (
+                  <li key={city}>
+                    <MapPin />
+                    {city}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-          <div>
-            <div className="mb-5 flex items-center gap-3 text-primary">
-              <MapPin className="h-9 w-9" />
-              <p className="font-display text-3xl font-extrabold uppercase">Zona Sur, Buenos Aires</p>
-            </div>
-            <ul className="zone-list">
-              {coverage.map((city) => (
-                <li key={city}>
-                  <MapPin />
-                  {city}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="section-space order-9 bg-secondary">
         <div className="page-width grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
