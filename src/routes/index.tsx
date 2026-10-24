@@ -40,10 +40,6 @@ export const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_M
 
 const siteUrl = import.meta.env.VITE_SITE_URL ?? "https://pablo-repara-zona-sur.vercel.app";
 const googleReviewsUrl = import.meta.env.VITE_GOOGLE_REVIEWS_URL as string | undefined;
-const metaPixelId = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
-const gAdsId = import.meta.env.VITE_GADS_ID as string | undefined;
-const gAdsLabel = import.meta.env.VITE_GADS_CONVERSION_LABEL as string | undefined;
-const gscToken = import.meta.env.VITE_GSC_TOKEN as string | undefined;
 
 const trust = [
   { icon: House, title: "Visita GRATIS", detail: "Diagnóstico sin cargo" },
@@ -258,11 +254,8 @@ export const Route = createFileRoute("/")({
       meta: [
         { title: "Pablo Service | Técnico de Electrodomésticos Zona Sur" },
         { name: "description", content: metaDescription },
-        { name: "twitter:card", content: "summary_large_image" },
         { property: "og:title", content: "Pablo Service | Técnico de Electrodomésticos Zona Sur" },
         { property: "og:description", content: metaDescription },
-        { property: "og:url", content: siteUrl },
-        { property: "og:locale", content: "es_AR" },
         ...(ogImageUrl
           ? [
               { property: "og:image", content: ogImageUrl },
@@ -270,28 +263,8 @@ export const Route = createFileRoute("/")({
               { property: "og:image:height", content: "630" },
             ]
           : []),
-        ...(gscToken ? [{ name: "google-site-verification", content: gscToken }] : []),
       ],
-      links: [{ rel: "canonical", href: siteUrl }],
       scripts: [
-        ...(metaPixelId
-          ? [
-              { src: "https://connect.facebook.net/en_US/fbevents.js", async: true },
-              {
-                children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');`,
-                type: "text/javascript",
-              },
-            ]
-          : []),
-        ...(gAdsId
-          ? [
-              { src: `https://www.googletagmanager.com/gtag/js?id=${gAdsId}`, async: true },
-              {
-                children: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${gAdsId}');`,
-                type: "text/javascript",
-              },
-            ]
-          : []),
         {
           type: "application/ld+json",
           children: JSON.stringify(jsonLd),
