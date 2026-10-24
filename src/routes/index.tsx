@@ -238,7 +238,7 @@ function ComparisonSlider({
 export const Route = createFileRoute("/")({
   head: () => {
     const metaDescription =
-      "Reparación de heladeras familiares y comerciales, lavarropas, lavavajillas y hornos en Zona Sur. Visita sin cargo y urgencias.";
+      "Reparamos heladeras familiares y comerciales, lavarropas, lavavajillas, hornos eléctricos, exhibidoras, cámaras de frío y cavas de vino en Zona Sur.";
     const ogImageUrl = import.meta.env.VITE_OG_IMAGE_URL as string | undefined;
     const jsonLd = {
       "@context": "https://schema.org",
