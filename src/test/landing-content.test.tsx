@@ -43,6 +43,13 @@ describe("landing page content", () => {
     expect(screen.getByText("Atendemos en Lomas de Zamora, Banfield y Lanús.")).toBeInTheDocument();
   });
 
+  it("shows the confirmed brand and payment answers", () => {
+    render(<Home />);
+
+    expect(screen.getByText("Sí, Pablo repara todas las marcas.")).toBeInTheDocument();
+    expect(screen.getByText("Pablo acepta todos los medios de pago.")).toBeInTheDocument();
+  });
+
   it("offers contact only through WhatsApp and uses the full-width sticky CTA", () => {
     render(<Home />);
 

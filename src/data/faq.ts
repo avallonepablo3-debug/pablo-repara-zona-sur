@@ -13,7 +13,7 @@ export const faqs = [
   },
   {
     q: "¿Repara todas las marcas?",
-    a: "Consultalo por WhatsApp y Pablo te confirma si trabaja con tu marca.",
+    a: "Sí, Pablo repara todas las marcas.",
   },
   {
     q: "¿Cuánto tarda la reparación?",
@@ -37,6 +37,6 @@ export const faqs = [
   },
   {
     q: "¿Cuáles son los métodos de pago?",
-    a: "Pablo te informa los medios de pago disponibles cuando coordina la reparación, según el trabajo y la situación.",
+    a: "Pablo acepta todos los medios de pago.",
   },
 ] as const;
