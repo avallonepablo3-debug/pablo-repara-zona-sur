@@ -1,0 +1,50 @@
+import { readdirSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+
+import Home, { WA_URL } from "@/routes/index";
+import { graciasHead, WhatsAppFallback } from "@/routes/gracias";
+
+function getSourceFiles(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const entryPath = join(directory, entry.name);
+    if (entry.isDirectory()) {
+      return entry.name === "test" ? [] : getSourceFiles(entryPath);
+    }
+    return /\.(ts|tsx)$/.test(entry.name) ? [entryPath] : [];
+  });
+}
+
+describe("landing page content", () => {
+  it("exposes the commercial equipment service card", () => {
+    render(<Home />);
+
+    expect(screen.getByRole("heading", { name: "Equipos comerciales" })).toBeInTheDocument();
+  });
+
+  it("keeps /gracias noindex and its WhatsApp fallback on WA_URL", () => {
+    expect(graciasHead().meta).toContainEqual({
+      name: "robots",
+      content: "noindex, nofollow",
+    });
+
+    render(<WhatsAppFallback />);
+    expect(screen.getByRole("link", { name: "Abrir WhatsApp" })).toHaveAttribute("href", WA_URL);
+  });
+
+  it("keeps direct wa.me URLs only in the WA_URL declaration", () => {
+    const sourceRoot = resolve(process.cwd(), "src");
+    const indexFile = resolve(sourceRoot, "routes", "index.tsx");
+    const directLinks = getSourceFiles(sourceRoot).flatMap((file) =>
+      readFileSync(file, "utf8")
+        .split(/\r?\n/)
+        .filter((line) => line.includes("https://wa.me/"))
+        .map((line) => ({ file: resolve(file), line: line.trim() })),
+    );
+
+    expect(directLinks).toHaveLength(1);
+    expect(directLinks[0].file).toBe(indexFile);
+    expect(directLinks[0].line).toMatch(/^export const WA_URL = /);
+  });
+});

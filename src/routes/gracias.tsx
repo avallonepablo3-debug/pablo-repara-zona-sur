@@ -14,14 +14,28 @@ type TrackingWindow = Window & {
 };
 
 export const Route = createFileRoute("/gracias")({
-  head: () => ({
+  head: graciasHead,
+  component: Gracias,
+});
+
+export function graciasHead() {
+  return {
     meta: [
       { title: "Gracias | Pablo Service" },
       { name: "robots", content: "noindex, nofollow" },
     ],
-  }),
-  component: Gracias,
-});
+  };
+}
+
+export function WhatsAppFallback() {
+  return (
+    <Button asChild variant="whatsapp" className="wa-button">
+      <a href={WA_URL} target="_blank" rel="noopener noreferrer">
+        Abrir WhatsApp
+      </a>
+    </Button>
+  );
+}
 
 function Gracias() {
   const startedRef = useRef(false);
@@ -66,11 +80,7 @@ function Gracias() {
         </p>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Button asChild variant="whatsapp" className="wa-button">
-            <a href={WA_URL} target="_blank" rel="noopener noreferrer">
-              Abrir WhatsApp
-            </a>
-          </Button>
+          <WhatsAppFallback />
           <Button asChild variant="secondary" className="secondary-scroll-link">
             <a href="/">Volver al inicio</a>
           </Button>
