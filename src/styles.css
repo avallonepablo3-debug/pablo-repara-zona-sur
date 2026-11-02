@@ -97,6 +97,7 @@
 .wa-button.hero-cta { min-height: 76px; font-size: 23px; padding-inline: 30px; }
 .secondary-scroll-link { min-height: 48px; }
 .secondary-scroll-link a { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; width: 100%; }
+.google-reviews-cta { min-height: 64px; padding: 16px 32px; font-size: 19px; font-weight: 800; border-radius: 3px; box-shadow: var(--shadow-solid); }
 .trust-item { display: flex; gap: 15px; align-items: center; padding: 25px 20px; border-right: 1px solid var(--border); }
 .trust-item:last-child { border-right: 0; }
 .trust-item strong { display: block; font: 800 30px/1 var(--font-display); text-transform: uppercase; color: var(--primary); }
@@ -182,6 +183,7 @@
   .wa-button.hero-cta { width: 100%; min-height: 68px; font-size: 19px; padding-inline: 12px; }
   .wa-button:hover { transform: none; }
   .mobile-contact .wa-button { min-height: 66px; font-size: 18px; padding-inline: 8px; }
+  .google-reviews-cta { min-height: 60px; width: 100%; padding-inline: 16px; }
   .trust-item { padding: 14px 4px; gap: 14px; align-items: center; border-right: 0; border-bottom: 1px solid var(--border); }
   .trust-item:last-child { border-bottom: 0; }
   .trust-item strong { font-size: 24px; }

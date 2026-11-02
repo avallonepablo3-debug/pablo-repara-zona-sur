@@ -38,10 +38,26 @@ describe("landing page content", () => {
     expect(screen.getByText(/Salvaste mi lavarropa! Gracias Pablo/)).toBeInTheDocument();
     expect(screen.getByText(/Excelente servicio el lavarropas quedó nuevo/)).toBeInTheDocument();
     expect(document.querySelectorAll(".review .text-accent svg")).toHaveLength(25);
-    expect(screen.getAllByRole("link", { name: "Ver opiniones en Google" })).toHaveLength(2);
+    expect(screen.getAllByRole("link", { name: "Ver opiniones en Google" })).toHaveLength(3);
     for (const link of screen.getAllByRole("link", { name: "Ver opiniones en Google" })) {
       expect(link).toHaveAttribute("href", GOOGLE_REVIEWS_URL);
     }
+
+    const prominentReviewsLink = screen
+      .getAllByRole("link", { name: "Ver opiniones en Google" })
+      .find((link) => link.classList.contains("google-reviews-cta"));
+    const firstReview = document.querySelector(".review");
+
+    expect(prominentReviewsLink).toBeInTheDocument();
+    expect(firstReview).toBeInTheDocument();
+    if (!prominentReviewsLink || !firstReview) {
+      throw new Error("The prominent Google reviews link and review cards should be rendered");
+    }
+    expect(prominentReviewsLink).toHaveClass("google-reviews-cta");
+    expect(prominentReviewsLink).toHaveAttribute("href", GOOGLE_REVIEWS_URL);
+    expect(prominentReviewsLink.compareDocumentPosition(firstReview)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
   });
 
   it("places Google reviews right after the trust bar on mobile and desktop", () => {

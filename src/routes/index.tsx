@@ -456,6 +456,14 @@ function Index() {
           <div className="page-width">
             <div className="section-kicker text-muted-foreground">Pablo en tu barrio</div>
             <h2 className="text-primary">Opiniones reales en Google</h2>
+            <div className="mt-6 flex justify-center">
+              <Button asChild size="lg" className="google-reviews-cta">
+                <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
+                  Ver opiniones en Google
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+              </Button>
+            </div>
             <div className="mt-9 grid gap-6 md:grid-cols-3">
               {testimonials.map((review) => (
                 <figure key={`${review.name}-${review.barrio}`} className="review">
