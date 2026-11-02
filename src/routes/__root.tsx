@@ -77,7 +77,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => {
     const siteUrl = import.meta.env.VITE_SITE_URL ?? "https://pablo-repara-zona-sur.vercel.app";
     const metaPixelId = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
-    const gAdsId = import.meta.env.VITE_GADS_ID as string | undefined;
     const gscToken = import.meta.env.VITE_GSC_TOKEN as string | undefined;
 
     return {
@@ -100,6 +99,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { rel: "canonical", href: siteUrl },
       ],
       scripts: [
+        {
+          src: "https://www.googletagmanager.com/gtag/js?id=AW-18550758524",
+          async: true,
+        },
+        {
+          children: "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-18550758524');",
+          type: "text/javascript",
+        },
         ...(metaPixelId
           ? [
               {
@@ -108,18 +115,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               },
               {
                 children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');`,
-                type: "text/javascript",
-              },
-            ]
-          : []),
-        ...(gAdsId
-          ? [
-              {
-                src: `https://www.googletagmanager.com/gtag/js?id=${gAdsId}`,
-                async: true,
-              },
-              {
-                children: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${gAdsId}');`,
                 type: "text/javascript",
               },
             ]
