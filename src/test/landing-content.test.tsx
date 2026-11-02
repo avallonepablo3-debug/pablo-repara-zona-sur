@@ -44,6 +44,24 @@ describe("landing page content", () => {
     }
   });
 
+  it("places Google reviews right after the trust bar on mobile and desktop", () => {
+    render(<Home />);
+
+    const trustSection = screen
+      .getByRole("link", { name: "Solicitar visita sin cargo" })
+      .closest("section");
+    const reviewsSection = screen
+      .getByRole("heading", { name: "Opiniones reales en Google" })
+      .closest("section");
+    const servicesSection = screen
+      .getByRole("heading", { name: "¿Qué le pasa a tu electrodoméstico?" })
+      .closest("section");
+
+    expect(trustSection).toHaveClass("order-3");
+    expect(reviewsSection).toHaveClass("order-4", "md:order-4");
+    expect(servicesSection).toHaveClass("order-5", "md:order-5");
+  });
+
   it("limits visible coverage and the barrios FAQ to the confirmed localities", () => {
     render(<Home />);
 

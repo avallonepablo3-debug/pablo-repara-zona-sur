@@ -366,7 +366,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="servicios" className="section-space order-4 bg-secondary">
+      <section id="servicios" className="section-space order-5 md:order-5 bg-secondary">
         <div className="page-width">
           <div className="section-kicker text-muted-foreground">Servicio técnico especializado</div>
           <h2 className="text-primary">¿Qué le pasa a tu electrodoméstico?</h2>
@@ -452,7 +452,7 @@ function Index() {
       </section>
 
       {testimonials.length > 0 && (
-        <section className="section-space order-5 bg-secondary md:order-7">
+        <section className="section-space order-4 bg-secondary md:order-4">
           <div className="page-width">
             <div className="section-kicker text-muted-foreground">Pablo en tu barrio</div>
             <h2 className="text-primary">Opiniones reales en Google</h2>
