@@ -29,7 +29,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.svg";
-import { PHONE, PHONE_COUNTRY, services, URGENCY_TEXT, WA_MESSAGE } from "@/data/config";
+import { GOOGLE_REVIEWS_URL, PHONE, PHONE_COUNTRY, services, URGENCY_TEXT, WA_MESSAGE } from "@/data/config";
 import { coverage } from "@/data/coverage";
 import { faqs } from "@/data/faq";
 import { photos } from "@/data/photos";
@@ -39,8 +39,6 @@ export const WA_NUMBER = PHONE_COUNTRY;
 export const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`;
 
 const siteUrl = import.meta.env.VITE_SITE_URL ?? "https://pablo-repara-zona-sur.vercel.app";
-const googleReviewsUrl = import.meta.env.VITE_GOOGLE_REVIEWS_URL as string | undefined;
-
 const trust = [
   { icon: House, title: "Visita GRATIS", detail: "Diagnóstico sin cargo" },
   { icon: BadgeCheck, title: "30+ Años", detail: "Experiencia que responde" },
@@ -331,15 +329,13 @@ function Index() {
               <a href="#servicios">Ver qué reparamos</a>
             </Button>
           </div>
-          {googleReviewsUrl ? (
-            <div className="mt-3">
-              <Button asChild variant="secondary" className="secondary-scroll-link">
-                <a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer">
-                  Ver opiniones en Google
-                </a>
-              </Button>
-            </div>
-          ) : null}
+          <div className="mt-3">
+            <Button asChild variant="secondary" className="secondary-scroll-link">
+              <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
+                Ver opiniones en Google
+              </a>
+            </Button>
+          </div>
 
           <p className="hero-guarantee mt-5 flex items-center gap-2 text-sm font-semibold">
             <ShieldCheck className="h-5 w-5 shrink-0 text-cta" />
@@ -459,7 +455,7 @@ function Index() {
         <section className="section-space order-5 bg-secondary md:order-7">
           <div className="page-width">
             <div className="section-kicker text-muted-foreground">Pablo en tu barrio</div>
-            <h2 className="text-primary">Testimonios de clientes</h2>
+            <h2 className="text-primary">Opiniones reales en Google</h2>
             <div className="mt-9 grid gap-6 md:grid-cols-3">
               {testimonials.map((review) => (
                 <figure key={`${review.name}-${review.barrio}`} className="review">
@@ -473,7 +469,9 @@ function Index() {
                     )}
                     <Quote className="h-7 w-7 text-muted-foreground" />
                   </div>
-                  <blockquote className="mt-5 flex-1 text-lg leading-relaxed">“{review.text}”</blockquote>
+                  <blockquote className="mt-5 flex-1 text-lg leading-relaxed">
+                    “{review.text}”
+                  </blockquote>
                   <figcaption className="mt-6 flex items-center gap-3 border-t pt-5">
                     <div className="flex h-11 w-11 items-center justify-center bg-primary font-display text-2xl font-bold text-primary-foreground">
                       {review.name.charAt(0)}
@@ -481,7 +479,8 @@ function Index() {
                     <div>
                       <p className="font-bold text-primary">{review.name}</p>
                       <p className="text-sm text-muted-foreground">
-                        {review.source ? `${review.barrio} · ${review.source}` : review.barrio}
+                        {review.barrio ? `${review.barrio} · ` : "Reseña de "}
+                        {review.source}
                       </p>
                     </div>
                   </figcaption>
@@ -565,13 +564,11 @@ function Index() {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <WaButton label="Solicitar reparación" href="/gracias" />
-              {googleReviewsUrl ? (
-                <Button asChild variant="secondary" className="secondary-scroll-link">
-                  <a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer">
-                    Ver opiniones en Google
-                  </a>
-                </Button>
-              ) : null}
+              <Button asChild variant="secondary" className="secondary-scroll-link">
+                <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
+                  Ver opiniones en Google
+                </a>
+              </Button>
             </div>
           </div>
 

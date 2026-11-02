@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import Home, { WA_URL } from "@/routes/index";
+import { GOOGLE_REVIEWS_URL } from "@/data/config";
 import { graciasHead, WhatsAppFallback } from "@/routes/gracias";
 import { photos } from "@/data/photos";
 
@@ -30,14 +31,17 @@ describe("landing page content", () => {
     expect(screen.getByRole("img", { name: "Pablo Service" })).toHaveClass("brand-icon");
   });
 
-  it("shows the supplied review locations without invented source labels or stars", () => {
+  it("shows real Google reviews with attribution and links to the Google profile", () => {
     render(<Home />);
 
-    for (const barrio of ["Banfield", "Lomas de Zamora", "Lanús"]) {
-      expect(screen.getByText(barrio, { selector: ".review figcaption p" })).toBeInTheDocument();
+    expect(screen.getAllByText("Reseña de Google")).toHaveLength(5);
+    expect(screen.getByText(/Salvaste mi lavarropa! Gracias Pablo/)).toBeInTheDocument();
+    expect(screen.getByText(/Excelente servicio el lavarropas quedó nuevo/)).toBeInTheDocument();
+    expect(document.querySelectorAll(".review .text-accent svg")).toHaveLength(25);
+    expect(screen.getAllByRole("link", { name: "Ver opiniones en Google" })).toHaveLength(2);
+    for (const link of screen.getAllByRole("link", { name: "Ver opiniones en Google" })) {
+      expect(link).toHaveAttribute("href", GOOGLE_REVIEWS_URL);
     }
-    expect(document.querySelectorAll(".review .text-accent svg")).toHaveLength(0);
-    expect(screen.queryByText("· Zona Sur")).not.toBeInTheDocument();
   });
 
   it("limits visible coverage and the barrios FAQ to the confirmed localities", () => {
