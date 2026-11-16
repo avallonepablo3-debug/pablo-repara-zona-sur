@@ -75,7 +75,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => {
-    const siteUrl = import.meta.env.VITE_SITE_URL ?? "https://pablo-repara-zona-sur.vercel.app";
+    const siteUrl = import.meta.env.VITE_SITE_URL ?? "https://reparacionespablo.com.ar";
     const metaPixelId = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
     const gscToken = import.meta.env.VITE_GSC_TOKEN as string | undefined;
 

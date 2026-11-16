@@ -38,7 +38,7 @@ import { testimonials } from "@/data/testimonials";
 export const WA_NUMBER = PHONE_COUNTRY;
 export const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`;
 
-const siteUrl = import.meta.env.VITE_SITE_URL ?? "https://pablo-repara-zona-sur.vercel.app";
+const siteUrl = import.meta.env.VITE_SITE_URL ?? "https://reparacionespablo.com.ar";
 const trust = [
   { icon: House, title: "Visita GRATIS", detail: "Diagnóstico sin cargo" },
   { icon: BadgeCheck, title: "30+ Años", detail: "Experiencia que responde" },
